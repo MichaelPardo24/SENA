@@ -20,6 +20,7 @@ class AddMoreFieldsToUsersTable extends Migration
             $table->string('secondLastname', 30);
             $table->string('document', 20)->unique();
             $table->string('email')->nullable()->change();
+            $table->string('phone', 20)->unique()->nullable();
         });
     }
 
