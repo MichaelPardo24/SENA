@@ -10,23 +10,13 @@
             @csrf
 
             <div class="mt-4">
-                <x-jet-label value="{{ __('Primer Nombre') }}" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="firstname" :value="old('firstname')" required autofocus autocomplete="firstname" />
+                <x-jet-label value="{{ __('Nombres') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="names" :value="old('names')" required autofocus autocomplete="names" />
             </div>
 
             <div class="mt-4">
-                <x-jet-label value="{{ __('Segundo Nombre') }}" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename')" required autocomplete="middlename" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Primer Apellido') }}" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" autocomplete="lastname" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label value="{{ __('Segundo Apellido') }}" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="secondLastname" :value="old('secondLastname')" autocomplete="secondLastname" />
+                <x-jet-label value="{{ __('Apellidos') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="surnames" :value="old('surnames')" autocomplete="surnames" />
             </div>
 
             <div class="mt-4">
@@ -37,6 +27,11 @@
             <div class="mt-4">
                 <x-jet-label value="{{ __('Correo Electronico') }}" />
                 <x-jet-input class="block mt-1 w-full" type="email" name="email" :value="old('email')"  />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label value="{{ __('Celular') }}" />
+                <x-jet-input class="block mt-1 w-full" type="number" name="phone" :value="old('phone')"  />
             </div>
 
             <div class="mt-4">

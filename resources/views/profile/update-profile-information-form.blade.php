@@ -54,23 +54,18 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label value="{{ __('Primer nombre') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.firstname"/>
+            <x-jet-label value="{{ __('Nombres') }}" />
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.names"/>
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label value="{{ __('Segundo nombre') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.middlename"/>
+            <x-jet-label value="{{ __('Apellidos') }}" />
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.surnames"/>
         </div>
 
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label value="{{ __('Primer apellido') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.lastname"/>
-        </div>
-
-        <div class="col-span-6 sm:col-span-4">
-            <x-jet-label value="{{ __('Segundo apellido') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.secondLastname"/>
+            <x-jet-label value="{{ __('Documento') }}" />
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.document"/>
         </div>
 
         <!-- phone -->
