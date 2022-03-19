@@ -25,13 +25,23 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label value="{{ __('document_type') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="document_type" value="C.C" autocomplete="document_type" />
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label value="{{ __('Correo Electronico') }}" />
                 <x-jet-input class="block mt-1 w-full" type="email" name="email" :value="old('email')"  />
             </div>
 
             <div class="mt-4">
                 <x-jet-label value="{{ __('Celular') }}" />
-                <x-jet-input class="block mt-1 w-full" type="number" name="phone" :value="old('phone')"  />
+                <x-jet-input class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"  />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label value="{{ __('Dirección') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="direction" :value="old('direction')" required autofocus autocomplete="direction" />
             </div>
 
             <div class="mt-4">
@@ -41,7 +51,7 @@
 
             <div class="mt-4">
                 <x-jet-label value="{{ __('Confirmar Contraseña') }}" />
-                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-jet-input class="block mt-1 w-full" type="password" name="password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

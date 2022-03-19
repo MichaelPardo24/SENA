@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\profile;
 
 class User extends Authenticatable
 {
@@ -18,18 +19,17 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
     protected $fillable = [
-        'names',
-        'surnames',
-        'email',
-        'password',
         'document',
-        'phone',
+        'email',
+        'profile_document',
+        'password'
     ];
 
     /**
@@ -61,4 +61,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::Class); 
+    }
 }
