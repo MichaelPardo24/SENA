@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Profile;
 
 class User extends Authenticatable
 {
@@ -18,7 +17,6 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-
 
     /**
      * The attributes that are mass assignable.
@@ -62,8 +60,41 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+
+
+    // Relationships
+
+    public function fichas()
+    {
+        return $this->belongsToMany(Ficha::class, 'ficha_user')->using(FichaUser::class)->withPivot('status');
+    }
+
+    /**
+     * Relacion polimorfica con 'Files'
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    /**
+     * 1 - n con followUps - aprendices
+     */
+    public function apFollowUps()
+    {
+        return $this->hasMany(FollowUp::class, 'apprentice_id');
+    }
+
+    /**
+     * 1 - n con followUps - instructores
+     */
+    public function inFollowUps()
+    {
+        return $this->hasMany(FollowUp::class, 'instructor_id');
+    }
+
     public function profile()
     {
-        return $this->hasOne(Profile::Class); 
+        return $this->hasOne(Profile::Class);
     }
 }
