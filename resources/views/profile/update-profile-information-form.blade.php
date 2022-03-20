@@ -55,12 +55,12 @@
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label value="{{ __('Nombres') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.names"/>
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.profile.names"/>
         </div>
 
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label value="{{ __('Apellidos') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.surnames"/>
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.profile.surnames"/>
         </div>
 
         <div class="col-span-6 sm:col-span-4">
@@ -71,7 +71,7 @@
         <!-- phone -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="phone" value="{{ __('Celular') }}" />
-            <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
+            <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.profile.phone" autocomplete="phone" />
             <x-jet-input-error for="phone" class="mt-2" />
         </div>
 
