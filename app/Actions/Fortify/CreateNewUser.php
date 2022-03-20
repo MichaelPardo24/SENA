@@ -26,9 +26,9 @@ class CreateNewUser implements CreatesNewUsers
             'names' => ['required', 'string', 'max:45'],
             'surnames' => ['required', 'string', 'max:45'],
             'document_type' => ['required', 'in:C.C, T.I, C.E, Pasaporte'],
-            'document' => ['required', 'numeric'],
+            'document' => ['required', 'unique:users','numeric'],
             'password' => $this->passwordRules(),
-            'email' => ['string', 'max:255'],
+            'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'direction' => ['string'],
             'birth_at'=>['date', 'before:today'],
@@ -54,7 +54,6 @@ class CreateNewUser implements CreatesNewUsers
             'user_id' => $x->id,
         ]);
 
-        return redirect()->back();
-        //return User::latest('id')->first();
+        return null;
     }
 }
