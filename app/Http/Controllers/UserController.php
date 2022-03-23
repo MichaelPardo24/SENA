@@ -42,7 +42,7 @@ class UserController extends Controller
         $requestArrayConvert = $request->toArray();
         $createNewUser = new CreateNewUser;
         $createNewUser->create($requestArrayConvert);
-        return redirect('user');
+        return redirect("user")->with(['status' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
     }
 
     /**
@@ -53,7 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('dashboard.user.profile')->with(['user' => $user]);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user.edit')->with(['user'=>$user]);
     }
 
     /**
@@ -76,7 +76,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        $user->update($request->validated());
+        return redirect("user")->with(['status' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido actualizado satisfactoriamente!']);
     }
 
     /**
@@ -87,6 +88,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect("user")->with(['status' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido eliminado satisfactoriamente!']);
     }
 }

@@ -12,7 +12,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
         @livewireStyles
 
         <!-- Scripts -->
@@ -40,7 +40,7 @@
         </div>
 
         @stack('modals')
-
+        <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
         @livewireScripts
     </body>
 </html>
