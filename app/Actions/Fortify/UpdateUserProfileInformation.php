@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use App\Models\Profile;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -19,10 +20,13 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'phone' => ['required', 'string', 'max:30'],
+            'profile.phone'=> ['numeric', 'digits_between:7,20', 'nullable'],
+            'profile.direction'=> ['string', 'nullable'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
+
+
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
@@ -33,9 +37,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
-                'phone' => $input['phone'],
                 'email' => $input['email'],
             ])->save();
+
+            $user->profile->forceFill([
+                'phone' => $input['profile']['phone'],
+                'direction' => $input['profile']['direction'],
+            ])->save();
+
         }
     }
 
@@ -52,6 +61,11 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+        ])->save();
+
+        $user->profile->forceFill([
+            'phone' => $input['profile']['phone'],
+            'direction' => $input['profile']['direction'],
         ])->save();
 
         $user->sendEmailVerificationNotification();
