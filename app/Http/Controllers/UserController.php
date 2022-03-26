@@ -9,8 +9,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\Facades\Hash;
 
-
-
 class UserController extends Controller
 {
     /**

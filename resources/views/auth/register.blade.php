@@ -40,6 +40,11 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label value="{{ __('document_type') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="document_type" value="C.C" autocomplete="document_type" />
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label value="{{ __('Correo Electronico') }}" />
                 <x-jet-input class="block mt-1 w-s" type="email" name="email" value="{{old('email')}}" />
             </div>

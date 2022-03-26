@@ -26,7 +26,7 @@ class CreateNewUser implements CreatesNewUsers
             'names' => ['required', 'string', 'max:45'],
             'surnames' => ['required', 'string', 'max:45'],
             'document_type' => ['required'],
-            'document' => ['required', 'unique:users','numeric'],
+            'document' => ['required', 'numeric'],
             'password' => $this->passwordRules(),
             'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
@@ -40,7 +40,6 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'email' => $input['email'],
         ]);
-
 
         $user = User::latest('id')->first();
 
