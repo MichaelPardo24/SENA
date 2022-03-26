@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -18,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at','desc')->paginate(20);
+        $users = User::orderBy('created_at','desc')->paginate(10);
         return view('admin.user.index')->with(['users' => $users]);
     }
 
@@ -54,7 +53,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('dashboard.user.show')->with(['user' => $user]);
+        return view('dashboard.user.profile')->with(['user' => $user]);
     }
 
     /**
@@ -98,14 +97,14 @@ class UserController extends Controller
         $profile = Profile::find($user->id);
 
         //Actualizamos el objeto Profile
-        $user->profile->update([
+        $profile->update([
             'document' => $request->input('document'),
             'document_type' => $request->input('document_type'),
             'names' => $request->input('names'),
             'surnames' => $request->input('surnames'),
             'phone' => $request->input('phone'),
-            'direction' => $request->input('direction'),
-            'birth_at' => $request->input('birth_at'),
+            'direction' => $request->input('direction')
+            //'birth_at' => $request->input('birth_at'),
         ]);
 
         return redirect("user")->with(['status' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
@@ -120,6 +119,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect("user")->with(['status' => 'el usuario ha sido eliminado satisfactoriamente!']);
+        return redirect("user")->with(['status' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido eliminado satisfactoriamente!']);
     }
 }

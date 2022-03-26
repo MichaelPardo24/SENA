@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -35,18 +35,13 @@
             </div>
 
             <div class="mt-4">
-                <x-jet-label value="{{ __('Fecha de nacimiento') }}" />
-                <x-jet-input class="block mt-1 w-full" type="date" name="birth_at" value="" />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label value="{{ __('document_type') }}" />
-                <x-jet-input class="block mt-1 w-full" type="text" name="document_type" value="C.C" autocomplete="document_type" />
+                <x-jet-label value="{{ __('Fecha de cumpleaños') }}" />
+                <x-jet-input class="block mt-1 w-full" type="text" name="birth_at" value="" />
             </div>
 
             <div class="mt-4">
                 <x-jet-label value="{{ __('Correo Electronico') }}" />
-                <x-jet-input class="block mt-1 w-s" type="email" name="email" value="{{old('email')}}" />
+                <x-jet-input class="block mt-1 w-full" type="email" name="email" value="{{old('email')}}" />
             </div>
 
             <div class="mt-4">
