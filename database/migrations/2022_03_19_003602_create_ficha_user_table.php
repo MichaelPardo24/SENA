@@ -15,8 +15,8 @@ class CreateFichaUserTable extends Migration
     {
         Schema::create('ficha_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ficha_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('ficha_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('status', [
                 'Certificado',
                 'Finalizado',

@@ -22,6 +22,13 @@ class Ficha extends Model
         'town'
     ];
 
+    protected $casts = [
+        'start_school_stage' => 'datetime',
+        'end_school_stage' => 'datetime',
+        'start_production_stage' => 'datetime',
+        'end_production_stage' => 'datetime',
+    ];
+
     // Relationships
 
     /**

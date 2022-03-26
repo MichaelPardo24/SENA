@@ -44,8 +44,8 @@ class CreateFollowUpsTable extends Migration
 
             // foreign keys
             $table->foreignId('type_id')->constrained('production_stage_types');
-            $table->foreignId('apprentice_id')->constrained('users');
-            $table->foreignId('instructor_id')->constrained('users');
+            $table->foreignId('apprentice_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('instructor_id')->nullable()->constrained('users')->nullOnDelete();
         });
     }
 
