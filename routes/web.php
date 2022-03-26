@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\http\Controllers\UserController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('user', UserController::class)->middleware(['auth:sanctum', 'verified']);
+Route::resource('fichas', \App\Http\Controllers\FichaController::class);
+Route::resource('programs', \App\Http\Controllers\ProgramsController::class);
+
+
+Route::resource('file-types', \App\Http\Controllers\FileTypeController::class);
+
+Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
+Route::resource('user', UserController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

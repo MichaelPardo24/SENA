@@ -11,6 +11,7 @@ class File extends Model
 
     protected $fillable = [
         'url',
+        'name',
         'type_id',
         'fileable_id',
         'fileable_type'

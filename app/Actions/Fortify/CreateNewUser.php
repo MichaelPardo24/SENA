@@ -25,8 +25,8 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'names' => ['required', 'string', 'max:45'],
             'surnames' => ['required', 'string', 'max:45'],
-            'document_type' => ['required', 'in:C.C, T.I, C.E, Pasaporte'],
-            'document' => ['required', 'unique:users','numeric'],
+            'document_type' => ['required'],
+            'document' => ['required', 'numeric'],
             'password' => $this->passwordRules(),
             'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
@@ -40,18 +40,18 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
             'email' => $input['email'],
         ]);
-        
 
-        $x=User::latest('id')->first();
+        $user = User::latest('id')->first();
+
         Person::create([
             'document' => $input['document'],
             'document_type' => $input['document_type'],
             'names' => $input['names'],
             'surnames' => $input['surnames'],
             'phone' => $input['phone'],
-            //'direction' => $input['direction'],
-            //'birth_at' => $input['birth_at'],
-            'user_id' => $x->id,
+            'direction' => $input['direction'],
+            'birth_at' => $input['birth_at'],
+            'user_id' => $user->id,
         ]);
 
         return null;

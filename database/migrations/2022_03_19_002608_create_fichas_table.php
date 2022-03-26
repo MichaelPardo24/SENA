@@ -15,7 +15,7 @@ class CreateFichasTable extends Migration
     {
         Schema::create('fichas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('program_id')->constrained();
+            $table->foreignId('program_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('code')->unique();
             $table->timestamp('start_school_stage');
             $table->timestamp('end_school_stage');
