@@ -12,10 +12,13 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
 
         @livewireStyles
 
         <!-- Scripts -->
+        <script defer src="https://unpkg.com/alpinejs@3.9.3/dist/cdn.min.js"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
@@ -40,6 +43,8 @@
         </div>
 
         @stack('modals')
+        <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.9.3/dist/cdn.min.js"></script>
 
         @livewireScripts
     </body>
