@@ -67,4 +67,34 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class);
     }
+
+
+    public function fichas()
+    {
+        return $this->belongsToMany(Ficha::class, 'ficha_user')->using(FichaUser::class)->withPivot('status');
+    }
+
+    /**
+     * Relacion polimorfica con 'Files'
+     */
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');
+    }
+
+    /**
+     * 1 - n con followUps - aprendices
+     */
+    public function apFollowUps()
+    {
+        return $this->hasMany(FollowUp::class, 'apprentice_id');
+    }
+
+    /**
+     * 1 - n con followUps - instructores
+     */
+    public function inFollowUps()
+    {
+        return $this->hasMany(FollowUp::class, 'instructor_id');
+    }
 }

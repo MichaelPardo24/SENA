@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('fichas', \App\Http\Controllers\FichaController::class);
+Route::resource('programs', \App\Http\Controllers\ProgramsController::class);
+
+
+Route::resource('file-types', \App\Http\Controllers\FileTypeController::class);
+
+Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
 Route::resource('user', UserController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
