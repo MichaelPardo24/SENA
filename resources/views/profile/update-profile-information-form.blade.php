@@ -28,7 +28,7 @@
 
                 <!-- Current Profile Photo -->
                 <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
+                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->profile->names }}" class="rounded-full h-20 w-20 object-cover">
                 </div>
 
                 <!-- New Profile Photo Preview -->
@@ -38,7 +38,7 @@
                     </span>
                 </div>
 
-                <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                {{-- <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                     {{ __('Seleccionar foto') }}
                 </x-jet-secondary-button>
 
@@ -46,39 +46,54 @@
                     <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Retirar foto') }}
                     </x-jet-secondary-button>
-                @endif
+                @endif --}}
 
                 <x-jet-input-error for="photo" class="mt-2" />
             </div>
         @endif
 
-        <!-- Name -->
+        <!-- Names -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label value="{{ __('Nombres') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.names"/>
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.profile.names"/>
         </div>
 
+        <!-- surnames -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label value="{{ __('Apellidos') }}" />
-            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.surnames"/>
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.profile.surnames"/>
         </div>
 
+        <!-- birth_at -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label value="{{ __('Fecha de nacimiento') }}" />
+            <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.profile.birth_at"/>
+        </div>
+
+
+        <!-- document -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label value="{{ __('Documento') }}" />
             <x-jet-input readonly type="text" class="mt-1 block w-full" wire:model.defer="state.document"/>
         </div>
 
+        <!-- direction -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label value="{{ __('Direccion') }}" />
+            <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="state.profile.direction"/>
+        </div>
+
         <!-- phone -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="phone" value="{{ __('Celular') }}" />
-            <x-jet-input id="phone" type="text" class="mt-1 block w-full" wire:model.defer="state.phone" autocomplete="phone" />
-            <x-jet-input-error for="phone" class="mt-2" />
+            <x-jet-label for="profile.phone" value="{{ __('Celular') }}" />
+            <x-jet-input id="profile.phone" type="text" class="mt-1 block w-full" wire:model.defer="state.profile.phone" />
+            <x-jet-input-error for="profile.phone" class="mt-2" />
         </div>
 
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="email" value="{{ __('Email') }}" />
-            <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
+            <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
     </x-slot>

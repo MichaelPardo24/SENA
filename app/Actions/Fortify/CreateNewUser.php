@@ -3,10 +3,12 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Profile as Person;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -21,22 +23,38 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input)
     {
         Validator::make($input, [
-            'names' => ['required', 'string', 'max:50'],
-            'surnames' => ['required', 'string', 'max:50'],
-            'document' => ['required', 'string', 'max:20'],
+            'names' => ['required', 'string', 'max:45'],
+            'surnames' => ['required', 'string', 'max:45'],
+            'document_type' => ['required'],
+            'document' => ['required', 'unique:users','numeric'],
             'password' => $this->passwordRules(),
-            'email' => ['string', 'max:255'],
-            'phone' => ['string', 'max:20'],
+            'email' => ['string', 'email', 'max:255'],
+            'phone' => ['numeric'],
+            'direction' => ['string'],
+            'birth_at'=>['date', 'before:today'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
-            'names' => $input['names'],
-            'surnames' => $input['surnames'],
+        User::create([
             'document' => $input['document'],
             'password' => Hash::make($input['password']),
             'email' => $input['email'],
-            'phone' => $input['phone'],
         ]);
+
+
+        $user = User::latest('id')->first();
+
+        Person::create([
+            'document' => $input['document'],
+            'document_type' => $input['document_type'],
+            'names' => $input['names'],
+            'surnames' => $input['surnames'],
+            'phone' => $input['phone'],
+            'direction' => $input['direction'],
+            'birth_at' => $input['birth_at'],
+            'user_id' => $user->id,
+        ]);
+
+        return null;
     }
 }
