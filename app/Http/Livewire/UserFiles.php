@@ -5,12 +5,20 @@ namespace App\Http\Livewire;
 // use App\Models\File;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class UserFiles extends Component
 {
+    use WithPagination;
+
     public $user;
 
+    protected $queryString = ['search' => ['except' => ''], 'perPage'];
+
     public $search;
+
+    public $perPage = '10';
+
 
     public function mount($user)
     {
@@ -23,7 +31,7 @@ class UserFiles extends Component
                         ->where('name', 'LIKE', '%'.$this->search.'%')
                         ->orWhere('name', 'LIKE', '%'.$this->search.'%')
                         ->orWhere('name', 'LIKE', '%'.$this->search.'%')
-                        ->paginate(10);
+                        ->paginate($this->perPage);
 
         return view('livewire.user-files', compact('files'));
     }

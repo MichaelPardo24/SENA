@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
@@ -18,8 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at','desc')->paginate(10);
-        return view('admin.user.index')->with(['users' => $users]);
+        return view('admin.user.index');
     }
 
     /**
@@ -89,10 +89,9 @@ class UserController extends Controller
         } else {
             $user->update([
                 'document' => $request->input('document'),
-                'email' => $request->input('email')
+                'email' => $request->input('email'),
             ]);
         }
-
 
         //Obtenemos el objeto Profile de User
         $profile = Profile::find($user->id);
@@ -104,8 +103,8 @@ class UserController extends Controller
             'names' => $request->input('names'),
             'surnames' => $request->input('surnames'),
             'phone' => $request->input('phone'),
-            'direction' => $request->input('direction')
-            //'birth_at' => $request->input('birth_at'),
+            'direction' => $request->input('direction'),
+            'birth_at' => $request->input('birth_at'),
         ]);
 
         return redirect("user")->with(['success' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
