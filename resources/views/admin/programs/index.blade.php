@@ -4,20 +4,16 @@
             {{ __('Programas') }}
         </h2>
     </x-slot>
-
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+    @if (\Session::has('success'))
+        <div class="bg-green-400 border-l-8 mb-4 border-green-600 text-slate-600">
+            <p class="p-2 py-4">{{ \Session::get('success') }}</p>
+        </div>
+    @endif
+    <div class="py-10">
+        <div class="flex flex-col justify-center">
+            <div class="mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
                 
-                @if (\Session::has('success'))
-                    <div class="bg-green-400 border-l-8 mb-4 border-green-600 text-slate-600">
-                        <p class="p-2 py-4">{{ \Session::get('success') }}</p>
-                    </div>
-                @endif
                 
-                <a href="{{route('programs.create')}}" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">CREAR</a>
-
                 {{-- table --}}
                 <livewire:programs />
 

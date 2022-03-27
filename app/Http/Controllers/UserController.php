@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
@@ -42,7 +43,7 @@ class UserController extends Controller
         $requestArrayConvert = $request->toArray();
         $createNewUser = new CreateNewUser;
         $createNewUser->create($requestArrayConvert);
-        return redirect("user")->with(['status' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
     }
 
     /**
@@ -107,7 +108,7 @@ class UserController extends Controller
             //'birth_at' => $request->input('birth_at'),
         ]);
 
-        return redirect("user")->with(['status' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
     }
 
     /**
@@ -119,6 +120,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect("user")->with(['status' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido eliminado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido eliminado satisfactoriamente!']);
     }
 }

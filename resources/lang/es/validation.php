@@ -154,6 +154,9 @@ return [
         'password' => 'contraseña',
         'phone' => 'celular',
         'direction' => 'dirección',
+        'birth_at' => 'fecha de nacimiento',
+        'profile.phone' => 'celular',
+        'current_password' => 'contraseña actual',
     ],
 
 ];
