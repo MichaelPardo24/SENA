@@ -31,7 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'direction' => ['string'],
-            'birth_at'=>['date', 'before:today'],
+            //'birth_at'=>['date', 'before:today'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 

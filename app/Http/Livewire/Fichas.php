@@ -4,10 +4,17 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Ficha;
+use Livewire\WithPagination;
 
 class Fichas extends Component
 {
+    use WithPagination;
+
+    protected $queryString = ['search' => ['except' => ''], 'perPage'];
+
     public $search;
+
+    public $perPage = '10';
 
     public function render()
     {
@@ -16,7 +23,8 @@ class Fichas extends Component
                         ->select('fichas.*', 'programs.name as program_name')              
                         ->where('programs.name', 'LIKE', '%'.$this->search.'%')
                         ->orWhere('code', 'LIKE', '%'.$this->search.'%')
-                        ->paginate(10);
+                        ->paginate($this->perPage);
+                        
         return view('livewire.fichas', compact('fichas'));
     }
 }

@@ -25,20 +25,28 @@
             <div class="mt-4">
                 <x-jet-label value="{{ __('Tipo de documento') }}" />
                 <select class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="document_type">
-                    <option value="C.C" selected>C.C</option>
-                    <option value="T.I">T.I</option>
-                    <option value="C.E">C.E</option>
-                    <option value="Pasaporte">Pasaporte</option>
+                    {{-- {{$document_types = ['C.C', 'T.I', 'C.E', 'Pasaporte']}}
+                    @foreach ($document_types as $document_type)
+                        @if ($document_type == $user->profile->document_type)
+                            <option value="{{ $$document_type }}" selected>{{ $document_type }}</option>
+                        @else
+                            <option value="{{ $document_type }}">{{ $document_type }}</option>
+                        @endif
+                    @endforeach --}}
+                    <option value="C.C" {{ old('document_type', $user->profile->document_type) == 'C.C' ? 'selected' : '' }}>C.C</option>
+                    <option value="T.I" {{ old('document_type', $user->profile->document_type) == 'T.I' ? 'selected' : '' }}>T.I</option>
+                    <option value="C.E" {{ old('document_type', $user->profile->document_type) == 'C.E' ? 'selected' : '' }}>C.E</option>
+                    <option value="Pasaporte" {{ old('document_type', $user->profile->document_type) == 'Pasaporte' ? 'selected' : '' }}>Pasaporte</option>
+
                 </select>
             </div>
-
             <div class="mt-4">
                 <x-jet-label value="{{ __('Documento') }}" />
                 <x-jet-input class="block mt-1 w-full" type="text" name="document" value="{{old('document', $user->document)}}" autocomplete="document" />
             </div>
 
             <div class="mt-4">
-                <x-jet-label value="{{ __('Fecha de nacimiento') }}" />
+                <x-jet-label value="{{ __('Fecha de cumpleaños') }}" />
                 <x-jet-input class="block mt-1 w-full" type="date" name="birth_at" value="{{old('birth_at', $user->profile->birth_at)}}" />
             </div>
 

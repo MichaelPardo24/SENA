@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
-use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -18,8 +19,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('created_at','desc')->paginate(20);
-        return view('admin.user.index')->with(['users' => $users]);
+        return view('admin.user.index');
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends Controller
         $requestArrayConvert = $request->toArray();
         $createNewUser = new CreateNewUser;
         $createNewUser->create($requestArrayConvert);
-        return redirect("user")->with(['status' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
     }
 
     /**
@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('dashboard.user.show')->with(['user' => $user]);
+        return view('dashboard.user.profile')->with(['user' => $user]);
     }
 
     /**
@@ -89,16 +89,15 @@ class UserController extends Controller
         } else {
             $user->update([
                 'document' => $request->input('document'),
-                'email' => $request->input('email')
+                'email' => $request->input('email'),
             ]);
         }
-
 
         //Obtenemos el objeto Profile de User
         $profile = Profile::find($user->id);
 
         //Actualizamos el objeto Profile
-        $user->profile->update([
+        $profile->update([
             'document' => $request->input('document'),
             'document_type' => $request->input('document_type'),
             'names' => $request->input('names'),
@@ -108,7 +107,7 @@ class UserController extends Controller
             'birth_at' => $request->input('birth_at'),
         ]);
 
-        return redirect("user")->with(['status' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
     }
 
     /**
@@ -120,6 +119,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect("user")->with(['status' => 'el usuario ha sido eliminado satisfactoriamente!']);
+        return redirect("user")->with(['success' => 'el usuario ' . $user->names . ' ' . $user->surnames . 'ha sido eliminado satisfactoriamente!']);
     }
 }
