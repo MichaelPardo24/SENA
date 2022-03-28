@@ -15,15 +15,16 @@
                         <p class="p-2 py-4">{{ \Session::get('success') }}</p>
                     </div>
                 @endif
-                <div class="p-4">
-                    <h3 class="text-lg text-orange-700">Archivos de: <span class="text-orange-500 text-xl">{{ $user->profile->names }}</span></h3>
+                
+                <h3 class="block p-4 text-slate-800">Mis Archivos:</h3>
 
-                    <ul class="ml-4 list-disc list-inside text-sm">
-                        <li>Documento: {{$user->document}}</li>
-                    </ul>
+                <div class="w-full mx-auto sm:max-w-lg flex justify-between">
+                    <a href="{{ route('apprentices-files.create') }}" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">SUBIR</a>
+
+                    <a href="#" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">REPORTAR</a>
                 </div>
 
-                <livewire:user-files :user="$user"/>
+                <livewire:user-files />
 
             </div>
         </div>

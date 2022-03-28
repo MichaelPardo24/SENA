@@ -16,6 +16,7 @@ class CreateFileTypesTable extends Migration
         Schema::create('file_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('url');
         });
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class profile extends Model
+class Profile extends Model
 {
     use HasFactory;
     
@@ -25,6 +25,6 @@ class profile extends Model
 
     public function User()
     {
-        return $this->belongsTo(User::Class); 
+        return $this->belongsTo(User::class); 
     }
 }

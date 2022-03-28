@@ -18,6 +18,7 @@ class CreateFilesMTable extends Migration
             $table->string('name');
             $table->string('url');
             $table->foreignId('type_id')->nullable()->constrained('file_types')->nullOnDelete();
+            $table->foreignId('ficha_id')->nullable()->constrained('fichas')->nullOnDelete();
             $table->unsignedBigInteger('fileable_id');
             $table->string('fileable_type');
             $table->timestamps();

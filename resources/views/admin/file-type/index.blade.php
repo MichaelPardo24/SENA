@@ -21,12 +21,14 @@
                     <thead>
                         <tr class="bg-orange-100 text-gray-800 tracking-widest">
                             <th class="px-4 py-2 font-sans font-normal border border-orange-300">Tipo de archivo</th>
+                            <th class="px-4 py-2 font-sans font-normal border border-orange-300">Descargar</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($fileTypes as $fileType)
                             <tr class=" odd:bg-orange-200 even:bg-orange-50 text-sm text-gray-600 border border-orange-300 hover:bg-orange-300 cursor-pointer">
                                 <td><a href="{{ route('file-types.edit', $fileType) }}" class="block px-4 py-2"> {{ $fileType->name}}</a> </td>
+                                <td><a href="{{ route('file-types.show', $fileType) }}" class="block px-4 py-2"> Descargar </a> </td>
                             </tr>
                         @endforeach
                     </tbody>

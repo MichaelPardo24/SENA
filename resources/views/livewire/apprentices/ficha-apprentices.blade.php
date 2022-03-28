@@ -4,12 +4,10 @@
     <table class="table-auto mx-auto my-5 shadow-lg">
         <thead>
             <tr class="bg-orange-100 text-gray-800 tracking-widest">
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Codigo</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Programa</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Inicio Lectiva</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Fin Lectiva</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Inicio Prod.</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Fin Prod.</th>
+                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Documento</th>
+                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Nombres</th>
+                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Apellidos</th>
+                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Correo</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +24,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6" class="p-2 text-center italic text-sm bg-orange-400 border border-orange-300 rounded-b">
+                <td colspan="6" class="p-2 text-center italic text-sm bg-orange-300 border border-orange-300 rounded-b">
                     @if (strlen($fichas->links()) > 20)
                         {{$fichas->links()}}
                     @else

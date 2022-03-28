@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileType;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileTypeController extends Controller
 {
@@ -37,11 +39,17 @@ class FileTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => ['required']
+        $request->validate([
+            'name' => ['required'],
+            'file' => ['required', 'mimes:pdf,docx,xls,xlsx', 'max:2000'],
         ]);
 
-        FileType::create($validated);
+        $url = Storage::putFile('docs', $request->file('file'));
+
+        FileType::create([
+            'name' => $request->name,
+            'url'  => $url
+        ]);
 
         return redirect()->back()->with('success', 'FileType creado correctamente :)');
     }
@@ -54,9 +62,8 @@ class FileTypeController extends Controller
      */
     public function show(FileType $fileType)
     {
-        return view('admin.file-type.show', [
-            'fileType' => $fileType
-        ]);
+        return Storage::download($fileType->url, Str::slug($fileType->name));
+
     }
 
     /**
@@ -98,6 +105,10 @@ class FileTypeController extends Controller
      */
     public function destroy(FileType $fileType)
     {
+        if (Storage::exists($fileType->url)) {
+            Storage::delete($fileType->url);
+        }
+
         $fileType->delete();
 
         return redirect()->route('file-types.index')->with('success', 'FileType eliminado correctamente :)');

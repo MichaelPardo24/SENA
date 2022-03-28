@@ -12,7 +12,8 @@ class FileType extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'name'
+        'name',
+        'url'
     ];
 
     protected $table = "file_types";

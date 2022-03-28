@@ -22,7 +22,7 @@
 
                 <x-jet-validation-errors class="mb-4" />
 
-                <form action="{{ route('file-types.store') }}" method="post">
+                <form action="{{ route('file-types.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="">
                         <x-jet-label value="Nombre:" />
@@ -32,7 +32,11 @@
                             name="name" 
                             :value="old('name')" required autofocus/>
                     </div>
-
+                    <div class="my-5">
+                        <x-jet-label value="Archivo:" />
+                        <input type="file" name="file" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="block w-full text-sm text-slate-500 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-200 file:text-orange-700 hover:file:bg-orange-300" required>
+                        
+                    </div>
                     <div class="flex flex-row p-2 mt-4 justify-around">
                         <x-jet-button class="">
                             Crear FileType
