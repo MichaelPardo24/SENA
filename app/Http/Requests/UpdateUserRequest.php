@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -27,7 +27,12 @@ class UpdateUserRequest extends FormRequest
         return [
             'names' => ['required', 'string', 'max:45'],
             'surnames' => ['required', 'string', 'max:45'],
-            'document_type' => ['required'],
+            'document_type' => ['required', Rule::in([
+                'C.C',
+                'T.I',
+                'C.E',
+                'Pasaporte'
+            ])],
             'document' => ['required', 'numeric'],
             'password' => [],
             'email' => ['string', 'email', 'max:255'],
