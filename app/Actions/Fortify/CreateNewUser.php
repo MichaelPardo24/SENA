@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use App\Models\Profile as Person;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,13 +26,18 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'names' => ['required', 'string', 'max:45'],
             'surnames' => ['required', 'string', 'max:45'],
-            'document_type' => ['required'],
+            'document_type' => ['required', Rule::in([
+                'C.C',
+                'T.I',
+                'C.E',
+                'Pasaporte'
+            ])],
             'document' => ['required', 'numeric'],
             'password' => $this->passwordRules(),
             'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'direction' => ['string'],
-            'birth_at'=>['date', 'before:today'],
+            //'birth_at'=>['date', 'before:today'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 

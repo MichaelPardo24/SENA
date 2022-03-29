@@ -9,8 +9,11 @@ use Livewire\WithPagination;
 class Fichas extends Component
 {
     use WithPagination;
-
+  
+    protected $queryString = ['search' => ['except' => ''], 'perPage'];
+  
     public $search;
+    public $perPage = '10';
 
     public function render()
     {
@@ -20,7 +23,7 @@ class Fichas extends Component
                         ->where('programs.name', 'LIKE', '%'.$this->search.'%')
                         ->orWhere('code', 'LIKE', '%'.$this->search.'%')
                         ->orderBy('programs.name', 'asc')
-                        ->paginate(10);
+                        ->paginate($this->perPage);
                         
         return view('livewire.fichas', compact('fichas'));
     }

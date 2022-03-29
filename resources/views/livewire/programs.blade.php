@@ -1,34 +1,35 @@
 <div>
-    <x-jet-input type="text" wire:model.debounce.300ms="search" class="block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
-
-    <table class="table-auto mx-auto my-5 shadow-lg">
-        <thead>
-            <tr class="bg-orange-100 text-gray-800 tracking-widest">
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Programa</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">Tipo</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300">N. fichas</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($programs as $program)
-                <tr class=" odd:bg-orange-200 even:bg-orange-50 text-sm text-gray-600 border border-orange-300 hover:bg-orange-300 cursor-pointer">
-                    <td><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2"> {{ $program->name}}</a> </td>
-                    <td><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2"> {{ $program->type}}</a> </td>
-                    <td><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2"> {{ $program->fichas_count}}</a> </td>
-                </tr>
-            @endforeach
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="3" class="p-2 text-center italic text-sm bg-orange-300 border border-orange-300 rounded-b">
-                    @if (strlen($programs->links()) > 20)
-                        {{$programs->links()}}
-                    @else
-                        Displaying all records
-                    @endif
-                </td>            
-            </tr>
-        </tfoot>
-
-    </table>
+    <header class="flex justify-between px-6 py-4 border-b border-gray-100">
+        <a class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white" href="{{ route('programs.create') }}">Crear</a>
+        <x-jet-input type="text" wire:model.debounce.300ms="search" class="ml-4 block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
+    </header>
+    <div class="p-3">
+        @if (count($programs))
+            <table class="table-auto w-full">
+                <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
+                    <tr>
+                        <th class="p-3 pl-6 whitespace-nowrap font-semibold text-left">Programa</th>
+                        <th class="p-3 whitespace-nowrap font-semibold">Tipo</th>
+                        <th class="p-3 whitespace-nowrap font-semibold">N. fichas</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm divide-y divide-gray-100">
+                    @foreach ($programs as $program)
+                        <tr class="hover:bg-orange-50">
+                            <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2">{{ Str::limit($program->name, 50)}}</a></td>
+                            <td class="p-2 px-5 whitespace-nowrap text-left font-semibold text-gray-700"><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2">{{ $program->type}}</a></td>
+                            <td class="p-2 whitespace-nowrap text-center font-medium text-gray-700"><a href="{{ route('programs.edit', $program) }}" class="block px-4 py-2">{{ $program->fichas_count}}</a></td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table> 
+        @else
+            <div class="bg-white px-4 py—3 border—t text-gray-500 sm:px-6">
+                No hay resultados para la busqueda "{{$search}}" en la pagina {{$page}}
+            </div>
+        @endif
+        <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
+            {{ $programs->links() }}
+         </div>
+    </div>
 </div>
