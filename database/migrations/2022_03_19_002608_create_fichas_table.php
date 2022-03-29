@@ -30,6 +30,7 @@ class CreateFichasTable extends Migration
                 'Tecnico',
             ]);
             $table->string('town');
+            $table->softDeletes();
         });
     }
 

@@ -116,12 +116,41 @@
                     {{-- Informacion de la ficha  --}}
                     <div class="flex flex-col p-3 gap-4 relative">
                         <div class="rounded shadow-lg">
-                            <div class="rounded bg-orange-200 p-4 sticky top-4">
-                                Alumnos: {{$ficha->users->count()}} <br>
-                                Instructor Tecnico: {{$ficha->users->count()}}
+                            <div class="rounded bg-orange-200 p-4">
+                                <span class="inline-block w-full my-2 mx-1 select-none text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2">
+                                    Usuarios vinculados:  {{$ficha->users_count}}
+                                </span>
+
+                                <a href="{{route('fichas.users.index', $ficha)}}" 
+                                    class="block w-full font-semibold uppercase tracking-widest rounded bg-green-700 text-xs text-green-200 px-4 py-2 mt-4 text-center transition-all duration-300 hover:bg-green-900">Ver Usuarios Vinculados</a>
                             </div>
+
                         </div>
                         
+                        <div class="p-3 shadow-lg bg-purple-200 rounded">
+                            {{-- Formulario de eliminacion --}}
+                            <p class="italic text-purple-600 text-sm text-center">De de baja a una ficha</p>
+                            <form action="{{ route('fichas.soft-delete', $ficha) }}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="block w-full items-center px-4 py-2 bg-purple-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-purple-500 active:bg-purple-900 focus:outline-none focus:border-purple-900 focus:ring focus:ring-purple-300 disabled:opacity-25 transition">
+                                    Archivar
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="p-3 shadow-lg bg-red-300 rounded">
+                            {{-- Formulario de eliminacion --}}
+                            <p class="italic text-red-600 text-sm text-center">Cuidado, la ficha se eliminará completamente</p>
+                            <form action="{{ route('fichas.destroy', $ficha) }}" method="post">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="block w-full items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-900 focus:outline-none focus:border-red-900 focus:ring focus:ring-red-300 disabled:opacity-25 transition">
+                                    ELIMINAR
+                                </button>
+                            </form>
+                          
+                         {{-- Modal --}}
                         <div class="mt-2 p-2">
                             <x-jet-danger-button class="px-1 flex-auto w-full" data-modal-toggle="popup-modal" data-id="{{ $ficha->id }}" >ELIMINAR</x-jet-danger-button>
                                 <!-- Delete Product Modal -->

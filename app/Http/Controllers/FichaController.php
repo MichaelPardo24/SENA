@@ -26,6 +26,8 @@ class FichaController extends Controller
      */
     public function index()
     {
+        // $this->authorize('fichas_access');
+        
         return view('admin.fichas.index');
     }
 
@@ -75,6 +77,8 @@ class FichaController extends Controller
      */
     public function edit(Ficha $ficha)
     {
+        $ficha->loadCount(['users']);
+        
         return view('admin.fichas.edit', [
             'ficha' => $ficha,
             'programs' => \App\Models\Program::pluck('name', 'id')->toArray(),
@@ -105,8 +109,21 @@ class FichaController extends Controller
      */
     public function destroy(Ficha $ficha)
     {
+        $ficha->forceDelete();
+
+        return redirect()->route('fichas.index')->with('success', 'Ficha eliminada correctamente :)');
+    }
+
+    /**
+     * SoftDelete the specified resource from storage.
+     *
+     * @param  \App\Models\Ficha  $ficha
+     * @return \Illuminate\Http\Response
+     */
+    public function softDelete(Ficha $ficha)
+    {
         $ficha->delete();
 
-        return redirect()->route('fichas.index')->with('success', 'Ficha Actualizada correctamente :)');
+        return redirect()->route('fichas.index')->with('success', 'Ficha archivada correctamente :)');
     }
 }

@@ -13,6 +13,7 @@ class File extends Model
         'url',
         'name',
         'type_id',
+        'ficha_id',
         'fileable_id',
         'fileable_type'
     ];

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Apprentice;
 
 use App\Models\File;
-use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
-class UserFileController extends Controller
+class FilesController extends Controller
 {
     protected $types;
 
@@ -22,32 +22,27 @@ class UserFileController extends Controller
         $this->types = \App\Models\FileType::pluck('name', 'id');
     }
 
-
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function index(User $user)
+    public function index()
     {
-        $this->authorize('viewAny', File::class);
-        return view('admin.files.user.index', [
-            'user' => $user
-        ]);
+        return view('apprentices.files.index');
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function create(User $user)
+    public function create()
     {
-        return view('admin.files.user.create', [
+        $this->authorize('create', File::class);
+        
+        return view('apprentices.files.create', [
             'types' => $this->types,
-            'user' => $user
         ]);
     }
 
@@ -55,22 +50,21 @@ class UserFileController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
         $request->validate([
-            'file' => ['required', 'mimes:pdf,docx,xls,xlsx'],
+            'file' => ['required', 'mimes:pdf,docx,xls,xlsx', 'max:2000'],
             'type_id' => ['required', 'exists:file_types,id']
         ]);
 
-        $url = Storage::putFile('users/docs', $request->file('file'));
+        $url  = Storage::putFile('apprentices/docs/'.auth()->id(), $request->file('file'));
         $name = Str::slug($this->types[$request->type_id]);
 
-        $user->files()->create([
-            'name' => $name,
-            'url' => $url,
+        $request->user()->files()->create([
+            'name'    => $name,
+            'url'     => $url,
             'type_id' => $request->type_id
         ]);
 
@@ -91,13 +85,12 @@ class UserFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
     public function edit(File $file)
     {
-        return view('admin.files.user.edit', [
+        return view('apprentices.files.edit', [
             'types' => $this->types,
             'file' => $file,
         ]);
@@ -107,14 +100,13 @@ class UserFileController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, File $file)
     {
         $request->validate([
-            'type_id' => ['required', 'exists:file_types,id']
+            'type_id' => ['required', 'exists:file_types,id', 'max:2000']
         ]);
 
         $name = Str::slug($this->types[$request->type_id]);
@@ -130,18 +122,17 @@ class UserFileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
     public function destroy(File $file)
     {
-        $file->delete();
-
         if (Storage::exists($file->url)) {
             Storage::delete($file->url);
         }
 
-        return redirect()->route('users.files.index', auth()->user())->with('success', 'Archivo eliminado correctamente :)');
+        $file->delete();
+
+        return redirect()->route('apprentices-files.index')->with('success', 'Archivo eliminado correctamente :)');
     }
 }
