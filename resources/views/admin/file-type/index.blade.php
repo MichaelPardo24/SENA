@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Arhivos') }}
+            {{ __('Tipo de archivos') }}
         </h2>
     </x-slot>
     @if (session('success'))
@@ -25,19 +25,13 @@
                 <table class="table-auto w-full">
                     <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
                         <tr>
-                            <th class="p-3 whitespace-nowrap font-semibold">Tipo de archivo</th>
-                            <th class="p-3 whitespace-nowrap font-semibold">Acciones</th>
+                            <th class="p-3 whitespace-nowrap font-semibold">Nombre</th>
                         </tr>
                     </thead>
                     <tbody class="text-sm divide-y divide-gray-100">
                         @foreach ($fileTypes as $fileType)
-                            <tr>
-                                <td class="p-2 whitespace-nowrap text-center font-bold text-gray-800">{{ $fileType->name}}</a> </td>
-                                <td class="p-2 whitespace-nowrap">
-                                    <div class="flex items-center text-center">
-                                        <a class="px-1 flex-auto" href="{{ route('file-types.edit', $fileType) }}"><i class="fa-solid fa-user-pen fa-xl" style="color:gray"></i></a>
-                                    </div>
-                                </td>
+                            <tr class="hover:bg-orange-50">
+                                <td class="p-2 whitespace-nowrap text-center font-bold text-gray-800"><a href="{{ route('file-types.edit', $fileType) }}">{{ $fileType->name}}</a></td>
                             </tr>
                         @endforeach
                     </tbody>

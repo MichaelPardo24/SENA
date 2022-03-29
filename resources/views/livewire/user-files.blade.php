@@ -10,20 +10,14 @@
                     <th class="p-3 whitespace-nowrap font-semibold">Nombre</th>
                     <th class="p-3 whitespace-nowrap font-semibold">Fecha Subida</th>
                     <th class="p-3 whitespace-nowrap font-semibold">Fecha Actualizacion</th>
-                    <th class="p-3 whitespace-nowrap font-semibold">Acciones</th>
                 </tr>
             </thead>
             <tbody class="text-sm divide-y divide-gray-100">
                 @foreach ($files as $file)
-                    <tr>
-                        <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $file->name}}</td>
-                        <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $file->created_at->format('M-d-Y')}}</td>
-                        <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $file->updated_at->format('M-d-Y')}}</td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="flex">
-                                <a class="px-1 flex-auto" href="{{ route('files.edit', $file) }}"><i class="fa-solid fa-user-pen fa-xl" style="color:gray"></i></a>
-                            </div>
-                        </td>
+                    <tr class="hover:bg-orange-50">
+                        <td class="p-2 whitespace-nowrap text-center font-bold text-gray-800"><a class="px-1 flex-auto" href="{{ route('files.edit', $file) }}">{{ $file->name}}</a></td>
+                        <td class="p-2 whitespace-nowrap text-center font-bold text-gray-800"><a class="px-1 flex-auto" href="{{ route('files.edit', $file) }}">{{ $file->created_at->format('M-d-Y')}}</a></td>
+                        <td class="p-2 whitespace-nowrap text-center font-bold text-gray-800"><a class="px-1 flex-auto" href="{{ route('files.edit', $file) }}">{{ $file->updated_at->format('M-d-Y')}}</a></td>
                     </tr>
                 @endforeach
             </tbody>
