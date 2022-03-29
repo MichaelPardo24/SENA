@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Profile;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
@@ -93,11 +92,8 @@ class UserController extends Controller
             ]);
         }
 
-        //Obtenemos el objeto Profile de User
-        $profile = Profile::find($user->id);
-
         //Actualizamos el objeto Profile
-        $profile->update([
+        $user->profile->update([
             'document' => $request->input('document'),
             'document_type' => $request->input('document_type'),
             'names' => $request->input('names'),
