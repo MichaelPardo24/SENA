@@ -1,13 +1,29 @@
+@php
+    $showSearch = strlen($search) > 0;
+    $areThereFiles = count($files) > 0 ? true : false;
+@endphp
+
 <div>
-    <header class="flex justify-between px-6 py-4 border-b border-gray-100">
+    <div class="w-full flex justify-between sm:mx-auto sm:max-w-5xl">
+        @if ($areThereFiles || $showSearch & !$is_trashed)
+            <a href="#" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">REPORTAR</a>
+        @endif
+        @if (!$is_trashed)
         <a 
             href="{{ route('fichas.apprentices-files.create', $ficha)}}" 
-            class="inline-block items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-500 active:bg-orange-900 focus:outline-none focus:border-orange-900 focus:ring focus:ring-orange-300 disabled:opacity-25 transitio">
+            class="inline-block mx-4 my-3 text-center rounded bg-orange-600 text-xs text-orange-100 px-4 py-2 transition-all duration-300 hover:bg-orange-800">
             SUBIR
         </a>
-        <x-jet-input type="text" wire:model.debounce.300ms="search" class="ml-4 block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
-    </header>
-    @if (count($files))
+        @endif
+    </div>
+
+    @if ($showSearch || $areThereFiles)
+        <header class="flex justify-between px-6 py-4 border-b border-gray-100">
+            <x-jet-input type="text" wire:model.debounce.300ms="search" class="ml-4 block w-full shadow-md" placeholder="Busca aquí"/>
+        </header>
+    @endif
+
+    @if ($areThereFiles)
            <table class="table-auto mx-auto my-5 shadow-lg">
             <thead>
                 <tr class="bg-orange-100 text-gray-800 tracking-widest">
@@ -34,7 +50,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="6" class="p-2 text-center italic text-sm bg-orange-400 border border-orange-400 rounded-b">
+                    <td colspan="4" class="p-2 text-center italic text-sm bg-orange-400 border border-orange-400 rounded-b">
                         @if (strlen($files->links()) > 20)
                             {{$files->links()}}
                         @else
@@ -45,12 +61,14 @@
             </tfoot>
         </table>
     @else
-        <div class="bg-white px-4 py—3 border—t text-gray-500 sm:px-6">
-            No hay resultados para la busqueda "{{$search}}" en la pagina {{$page}}
-        </div>
+        @if ($showSearch)
+            <div class="bg-white mb-4 px-4 py—3 sm:max-w-lg sm:mx-auto text-center text-gray-500 text-sm italic sm:px-6">
+                No hay resultados para la busqueda "{{$search}}" en la pagina {{$page}}
+            </div>
+        @else
+            <div class="bg-white mb-4 px-4 py—3 sm:max-w-lg sm:mx-auto text-center text-gray-500 text-sm italic sm:px-6">
+                No hay ningun archivo que mostrar :')
+            </div>
+        @endif
     @endif
-    <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
-        {{ $files->links() }}
-    </div>
 </div>
-

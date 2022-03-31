@@ -21,7 +21,7 @@
 
                 <x-jet-validation-errors class="mb-4" />
 
-                <form action="{{ route('apprentices-files.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('fichas.apprentices-files.store', $ficha) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <x-jet-label value="Tipo:" />
@@ -43,7 +43,7 @@
                             Subir archivo
                         </x-jet-button>
                         
-                        <a href="{{route('apprentices-files.index')}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Index</a>
+                        <a href="{{route('fichas.apprentices-files.index', $ficha)}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Index</a>
                     </div>
                 </form>
             </div>

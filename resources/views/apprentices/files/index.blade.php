@@ -18,14 +18,7 @@
                 
                 <h3 class="block p-4 text-slate-800">Mis Archivos:</h3>
 
-                <div class="w-full mx-auto sm:max-w-lg flex justify-between">
-                    <a href="{{ route('apprentices-files.create') }}" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">SUBIR</a>
-
-                    <a href="#" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">REPORTAR</a>
-                </div>
-
-                <livewire:user-files />
-
+                {{ $slot }}
             </div>
         </div>
     </div>

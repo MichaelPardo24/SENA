@@ -19,12 +19,19 @@ Route::get('/', function () {
 });
 
 Route::delete('ficha/{ficha:code}', [\App\Http\Controllers\FichaController::class, 'softDelete'])->name('fichas.soft-delete');
-Route::resource('fichas', \App\Http\Controllers\FichaController::class);
+Route::resource('fichas', \App\Http\Controllers\FichaController::class)->scoped(['ficha' => 'code']);
 Route::resource('programs', \App\Http\Controllers\ProgramsController::class);
-
-
 Route::resource('file-types', \App\Http\Controllers\FileTypeController::class);
-Route::resource('apprentices-files', \App\Http\Controllers\Apprentice\FilesController::class)->parameters(['apprentices-files' => 'file']);
+
+// Archivos de aprendices
+Route::resource('fichas.apprentices-files', \App\Http\Controllers\Apprentice\FilesController::class)
+        ->parameters(['apprentices-files' => 'file'])
+        ->scoped(['ficha' => 'code'])
+        ->except('index')
+        ->shallow();
+
+Route::get('fichas/{ficha:code}/apprentices-files', \App\Http\Livewire\Apprentices\Files::class)->name('fichas.apprentices-files.index');
+
 
 Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
 Route::resource('user', UserController::class);
