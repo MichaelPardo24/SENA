@@ -17,11 +17,11 @@ class Apprentices extends Component
 
     protected $listeners = ['render' => 'render'];
     
-    public function mount($ficha)
+    public function mount(Ficha $ficha)
     {
-        $this->ficha = $ficha;
-
+        $this->ficha = $ficha->id;
     }
+
     public function render()
     {
         $users = User::with('profile')
@@ -35,8 +35,13 @@ class Apprentices extends Component
 
                     ->where('document', 'LIKE', '%'.$this->search.'%')
                     ->paginate(10);
+        
+        $ficha = Ficha::find($this->ficha);
 
-        return view('livewire.fichas.apprentices', ['users' => $users])->layout('admin.fichas.users.index', ['ficha' => Ficha::find($this->ficha)]);
+        return view('livewire.fichas.apprentices', [
+            'users' => $users,
+            'fichaUser' => $ficha
+            ])->layout('admin.fichas.users.index', ['ficha' => $ficha]);
     }
 
     public function detach($user)
