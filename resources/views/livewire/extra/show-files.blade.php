@@ -1,4 +1,7 @@
 <div>
+    @php
+        $showButton = $userFiles->count() > 0 ? true : false;
+    @endphp
     <button 
         class="flex items-center p-2 rounded-md bg-orange-600 hover:bg-orange-500 hover:shadow-lg hover:shadow-black/40 transition-all duration-300 focus:ring-2 focus:ring-orange-700"
         wire:click="$set('open', true)"
@@ -19,6 +22,7 @@
 
         <x-slot name="content">
             <div class="flex flex-col gap-2 p-2">
+                @if ($showButton)
                 @foreach ($userFiles as $file)
                     <div class="bg-zinc-50 shadow-sm hover:shadow-md border border-zinc-300 rounded overflow-hidden flex">
                         <div class="flex-1 p-3 border-zinc-300 text-sm text-zinc-700">{{ $file->name }}</div>
@@ -28,10 +32,17 @@
                         </div>
                     </div>
                 @endforeach
+                @endif
             </div>
         </x-slot>
         
         <x-slot name="footer">
+            <a 
+                href="{{route('fichas.apprentice-all-files.download', [$ficha, $user])}}"
+                class="inline-flex items-center px-4 py-2 bg-white border border-orange-300 rounded-md font-semibold text-xs text-orange-700 uppercase tracking-widest shadow-sm hover:text-orange-500 focus:outline-none focus:border-orange-300 focus:ring focus:ring-orange-200 active:text-orange-800 active:bg-orange-50 disabled:opacity-25 transition"
+                >Descargar como ZIP
+            </a>
+
             <x-jet-danger-button wire:click="$set('open', false)" class="ml-2">
                 Cerrar
             </x-jet-button>

@@ -10,18 +10,24 @@ class ShowFiles extends Component
     public $open = false;
     public $files;
     public $user;
+    public $ficha;
+    public $userNmae;
 
     public function mount($user, $ficha)
     {
-        $usu = User::find($user);
+        $this->user = User::find($user);
+        $this->ficha = $ficha;
+        $this->userName = $this->user->profile->names .' '.$this->user->profile->surnames;
 
-        $this->user = $usu->profile->names .' '.$usu->profile->surnames;
-
-        $this->files = $usu->files()->where('ficha_id', $ficha)->get(); 
+        $this->files = $this->user->files()->where('ficha_id', $ficha)->get(); 
     }
 
     public function render()
     {
-        return view('livewire.extra.show-files', ['userFiles' => $this->files, 'userName' => $this->user]);
+        return view('livewire.extra.show-files', [
+            'userFiles' => $this->files,
+            'userName'  => $this->userName, 
+            'user'      => $this->user, 
+            'ficha'     => $this->ficha]);
     }
 }

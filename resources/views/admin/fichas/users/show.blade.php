@@ -40,9 +40,10 @@
 
                         {{-- change status --}}
                         <div>
-                            <livewire:extra.change-user-status :user="$user"/> 
+                            <livewire:extra.change-user-status /> 
                         </div>
                     </div>
+
 
                     {{-- user info  --}}
                     <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-200 bg-opacity-30">
@@ -60,7 +61,7 @@
                         </div>
                         <div class="flex flex-col justify-center items-center p-5 border border-gray-200">
                             <h3 class="text-slate-800 block w-full text-lg mb-2 tracking-wide">Archivos asociados:</h3>
-                            @livewire('extra.show-files', ['user' => $user->id, 'ficha' => $ficha->id])
+                                <livewire:extra.show-files :user="$user->id" :ficha="$ficha->id">
                         </div>
                     </div>
                 </div>
