@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Symfony\Component\HttpKernel\Profiler\Profile;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Arr;
+
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -37,9 +41,16 @@ class CreateNewUser implements CreatesNewUsers
             'email' => ['string', 'email', 'max:255'],
             'phone' => ['numeric'],
             'direction' => ['string'],
-            //'birth_at'=>['date', 'before:today'],
+            'birth_at'=>['date', 'before:today'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
+
+        //si el usuario loguado tiene el permido se valida $input('rol')
+        if (auth()->user()->can('change_role')){
+            Validator::make($input, [
+                'rol' => [],
+            ])->validate();
+        }
 
         User::create([
             'document' => $input['document'],
@@ -59,6 +70,13 @@ class CreateNewUser implements CreatesNewUsers
             'birth_at' => $input['birth_at'],
             'user_id' => $user->id,
         ]);
+
+        //si existe y esta validado $input['rol'] se asigna los roles al usuario creado, si no pasa por determinado a 'Aprendiz'
+        if (arr::exists($input, 'rol')){
+            $user->roles()->sync($input['rol']);
+        } else{
+            $user->roles()->sync(5);
+        }
 
         return null;
     }
