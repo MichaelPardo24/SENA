@@ -19,6 +19,24 @@
                 <x-jet-input class="block mt-1 w-full" type="text" name="surnames" value="{{old('surnames')}}" />
             </div>
 
+            @can('change_role')
+                <div class="mt-4">
+                    <x-jet-label value="{{ __('Rol') }}" />
+                    @foreach ($roles as $rol)
+                        @if ($user->hasRole($rol->name))
+                            <x-jet-input type="checkbox" class="text-orange-500" checked name="rol[]" value="{{$rol->id}}" />
+                            {{$rol->name}}
+                            <br>
+                            @continue
+                        @endif
+                        <x-jet-input type="checkbox" class="text-orange-500" name="rol[]" value="{{$rol->id}}" />
+                        {{$rol->name}}
+                        <br>
+                    @endforeach
+                </div>
+            @endcan
+
+
             <div class="mt-4">
                 <x-jet-label value="{{ __('Tipo de documento') }}" />
                 <select class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="document_type">
