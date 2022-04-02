@@ -27,7 +27,7 @@ Route::resource('file-types', \App\Http\Controllers\FileTypeController::class);
 Route::resource('apprentices-files', \App\Http\Controllers\Apprentice\FilesController::class)->parameters(['apprentices-files' => 'file']);
 
 Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
-Route::resource('user', UserController::class);
+Route::resource('user', UserController::class)->except('show');
 
 Route::get('fichas/{ficha}/users', \App\Http\Livewire\Fichas\Apprentices::class)->name('fichas.users.index');
 
