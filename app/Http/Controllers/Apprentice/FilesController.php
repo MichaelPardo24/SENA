@@ -19,6 +19,12 @@ class FilesController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
+        $this->middleware('can:files_index')->only('index');
+        $this->middleware('can:files_show')->only('show');
+        $this->middleware('can:files_create')->only('create', 'store');
+        $this->middleware('can:files_edit')->only('edit', 'update');
+        $this->middleware('can:files_destroy')->only('destroy');
         $this->types = \App\Models\FileType::pluck('name', 'id');
     }
 
