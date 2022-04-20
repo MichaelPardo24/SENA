@@ -38,7 +38,7 @@
                     </span>
                 </div>
 
-                {{-- <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
                     {{ __('Seleccionar foto') }}
                 </x-jet-secondary-button>
 
@@ -46,7 +46,7 @@
                     <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
                         {{ __('Retirar foto') }}
                     </x-jet-secondary-button>
-                @endif --}}
+                @endif
 
                 <x-jet-input-error for="photo" class="mt-2" />
             </div>
