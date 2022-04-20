@@ -7,10 +7,19 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
+use Spatie\Permission\Models\Role;
 
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:users_index')->only('index');
+        $this->middleware('can:users_create')->only('create', 'store');
+        $this->middleware('can:users_edit')->only('edit', 'update');
+        $this->middleware('can:users_destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +37,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        $roles = Role::all();
+        return view('auth.register')->with(['roles'=>$roles]);
     }
 
     /**
@@ -45,16 +55,6 @@ class UserController extends Controller
         return redirect("user")->with(['success' => 'el usuario ' . $request->input('names') .' ' . $request->input('surnames') . ' ha sido creado satisfactoriamente!']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        return view('dashboard.user.profile')->with(['user' => $user]);
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -64,7 +64,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.user.edit')->with(['user'=>$user]);
+        $roles = Role::all();
+        return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
     }
 
     /**
@@ -78,7 +79,6 @@ class UserController extends Controller
     {
         //Verifica si el espacio 'password' esta lleno, si es asi actualiza lo ingresado, si no
         //actualiza todo lo ingresado menos la contraseña
-
         if ($request->input('password')){
             $user->update([
                 'document' => $request->input('document'),
@@ -102,6 +102,9 @@ class UserController extends Controller
             'direction' => $request->input('direction'),
             'birth_at' => $request->input('birth_at'),
         ]);
+
+        //añadimos el rol
+        $user->roles()->sync($request->input('rol'));
 
         return redirect("user")->with(['success' => 'el usuario ' . $user->profile->names . ' ' . $user->profile->surnames . ' ha sido actualizado satisfactoriamente!']);
     }

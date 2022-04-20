@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Storage;
 
 class FileTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:file-types_index')->only('index');
+        $this->middleware('can:file-types_create')->only('create', 'store');
+        $this->middleware('can:file-types_show')->only('show');
+        $this->middleware('can:file-types_edit')->only('edit', 'update');
+        $this->middleware('can:file-types_destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

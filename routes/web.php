@@ -55,7 +55,7 @@ Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::c
         ->name('fichas.users.index');
 
 // Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
-Route::resource('user', UserController::class);
+Route::resource('user', UserController::class)->except('show');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

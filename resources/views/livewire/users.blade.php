@@ -29,6 +29,9 @@
                     <th class="p-3 whitespace-nowrap">
                         <div class="text-center font-semibold ">Actualización</div>
                     </th>
+                    <th class="p-3 whitespace-nowrap">
+                        <div class="text-center font-semibold ">Rol</div>
+                    </th>
                 </tr>
             </thead>
             <tbody class="text-sm divide-y divide-gray-100">
@@ -66,6 +69,10 @@
                         </td>
                         <td class="p-2 whitespace-nowrap">
                             <div class="text-center font-medium text-gray-800"><a href="{{ route('user.edit', $user->id) }}">{{ $user->updated_at->format('d/M/Y') }}</a>
+                            </div>
+                        </td>
+                        <td class="p-2 whitespace-nowrap">
+                            <div class="text-center font-medium text-gray-800"><a href="{{ route('user.edit', $user->id) }}">{{ $user->roles()->first()->name }}</a>
                             </div>
                         </td>
                     </tr>

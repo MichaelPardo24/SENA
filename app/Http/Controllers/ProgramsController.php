@@ -13,6 +13,15 @@ class ProgramsController extends Controller
         'Tecnologo'
     ];
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:programs_index')->only('index');
+        $this->middleware('can:programs_create')->only('create', 'store');
+        $this->middleware('can:programs_edit')->only('edit', 'update');
+        $this->middleware('can:programs_destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

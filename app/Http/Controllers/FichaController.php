@@ -18,6 +18,15 @@ class FichaController extends Controller
         'Tecnico'
     ];
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('can:fichas_index')->only('index');
+        $this->middleware('can:fichas_show')->only('show');
+        $this->middleware('can:fichas_create')->only('create', 'store');
+        $this->middleware('can:fichas_edit')->only('edit', 'update');
+        $this->middleware('can:fichas_destroy')->only('destroy', 'softDelete');
+    }
 
     /**
      * Display a listing of the resource.
