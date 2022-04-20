@@ -1,3 +1,32 @@
+@php
+    $navLinks = [
+        [
+            'name' => 'Usuarios',
+            'active' => request()->routeIs('user.index', 'user.edit', 'user.create'),
+            'route' => route('user.index'),
+            'rol' => 'users_index',
+        ],
+        [
+            'name' => 'Programas',
+            'active' => request()->routeIs('programs.index', 'programs.edit', 'programs.create'),
+            'route' => route('programs.index'),
+            'rol' => 'programs_index',
+        ],
+        [
+            'name' => 'Fichas',
+            'active' => request()->routeIs('fichas.index', 'fichas.edit', 'fichas.create'),
+            'route' => route('fichas.index'),
+            'rol' => 'fichas_index',
+        ],
+        [
+            'name' => 'Archivos',
+            'active' => request()->routeIs('file-types.index', 'file-types.edit', 'file-types.create'),
+            'route' => route('file-types.index'),
+            'rol' => 'file-types_index',
+        ],
+
+    ];/*  */
+@endphp
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,9 +41,13 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-jet-nav-link>
+                    @foreach ($navLinks as $navLink)
+                        @can($navLink['rol'])
+                            <x-jet-nav-link href="{{ $navLink['route'] }}" :active="$navLink['active']">
+                                {{ $navLink['name'] }}
+                            </x-jet-nav-link>
+                        @endcan
+                    @endforeach
                 </div>
             </div>
 
@@ -92,12 +125,8 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
+                                {{ __('Mi Perfil') }}
                             </x-jet-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -114,7 +143,7 @@
 
                                 <x-jet-dropdown-link href="{{ route('logout') }}"
                                          @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('Cerrar Sesión') }}
                                 </x-jet-dropdown-link>
                             </form>
                         </x-slot>
@@ -137,9 +166,13 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
+            @foreach ($navLinks as $navLink)
+                @can($navLink['rol'])
+                    <x-jet-responsive-nav-link href="{{ $navLink['route'] }}" :active="$navLink['active']">
+                        {{ $navLink['name'] }}
+                    </x-jet-responsive-nav-link>
+                @endcan
+            @endforeach
         </div>
 
         <!-- Responsive Settings Options -->
@@ -152,15 +185,16 @@
                 @endif
 
                 <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->profile->names }}</div>
+                    <div class="font-medium text-sm text-gray-700">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->Roles()->first()->name }}</div>
                 </div>
             </div>
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
+                    {{ __('Mi Perfil') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -175,7 +209,7 @@
 
                     <x-jet-responsive-nav-link href="{{ route('logout') }}"
                                    @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Cerrar Sesión') }}
                     </x-jet-responsive-nav-link>
                 </form>
 

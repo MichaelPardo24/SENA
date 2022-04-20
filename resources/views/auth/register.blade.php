@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
             <x-jet-authentication-card-logo />
@@ -18,6 +18,18 @@
                 <x-jet-label value="{{ __('Apellidos') }}" />
                 <x-jet-input class="block mt-1 w-full" type="text" name="surnames" value="{{old('surnames')}}" />
             </div>
+
+            @can('change_role')
+                <div class="mt-4">
+                    <x-jet-label value="{{ __('Rol') }}" />
+                    @foreach ($roles as $rol)
+                        <x-jet-input type="checkbox" class="text-orange-500" name="rol[]" value="{{old('rol[]', $rol->id)}}" />
+                        {{$rol->name}}
+                        <br>
+                    @endforeach
+                </div>
+            @endcan
+
 
             <div class="mt-4">
                 <x-jet-label value="{{ __('Tipo de documento') }}" />

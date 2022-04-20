@@ -19,6 +19,7 @@ class UserFileController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         $this->types = \App\Models\FileType::pluck('name', 'id');
     }
 
