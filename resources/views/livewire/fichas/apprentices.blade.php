@@ -24,11 +24,11 @@
         <tbody>
             @foreach ($users as $user)
                 <tr class=" odd:bg-orange-200 even:bg-orange-50 text-sm text-gray-600 border border-orange-300 hover:bg-orange-300 cursor-pointer">
-                    <td class=""><a href="#" class="block px-4 py-2"> {{ $user->document}}</a> </td>
-                    <td class=""><a href="#" class="block px-4 py-2"> {{ $user->profile->names}}</a> </td>
-                    <td class=""><a href="#" class="block px-4 py-2"> {{ $user->profile->surnames}}</a> </td>
-                    <td class=""><a href="#" class="block px-4 py-2"> {{ $user->email}}</a> </td>
-                    <td class=""><a href="#" class="block px-4 py-2"> {{ $role}}</a> </td>
+                    <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->document}}</a> </td>
+                    <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->profile->names}}</a> </td>
+                    <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->profile->surnames}}</a> </td>
+                    <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->email}}</a> </td>
+                    <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $role}}</a> </td>
                     <td class="p-1">
                         <x-jet-danger-button class="text-sm capitalize py-1 px-2" wire:click="detach({{$user->id}})">
                             Desvincular

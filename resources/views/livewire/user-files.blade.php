@@ -1,6 +1,10 @@
 <div>
     <header class="flex justify-between px-6 py-4 border-b border-gray-100">
-        <a class="bg-orange-500 font-bold py-2 px-4 mx-4 border rounded hover:bg-orange-400 text-white" href="{{ route('users.files.create', auth()->user()) }}">Subir</a>
+        <a 
+            href="{{ route('fichas.apprentices-files.create', $ficha)}}" 
+            class="inline-block items-center px-4 py-2 bg-orange-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-500 active:bg-orange-900 focus:outline-none focus:border-orange-900 focus:ring focus:ring-orange-300 disabled:opacity-25 transitio">
+            SUBIR
+        </a>
         <x-jet-input type="text" wire:model.debounce.300ms="search" class="ml-4 block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
     </header>
     @if (count($files))

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Apprentice;
 
 use App\Models\File;
+use App\Models\Ficha;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,26 +30,17 @@ class FilesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('apprentices.files.index');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Ficha $ficha)
     {
-        $this->authorize('create', File::class);
+        // $this->authorize('create', File::class);
         
         return view('apprentices.files.create', [
             'types' => $this->types,
+            'ficha' => $ficha
         ]);
     }
 
@@ -58,7 +50,7 @@ class FilesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Ficha $ficha)
     {
         $request->validate([
             'file' => ['required', 'mimes:pdf,docx,xls,xlsx', 'max:2000'],
@@ -69,8 +61,9 @@ class FilesController extends Controller
         $name = Str::slug($this->types[$request->type_id]);
 
         $request->user()->files()->create([
-            'name'    => $name,
+            'name'    => $name . '_' . now()->timestamp,
             'url'     => $url,
+            'ficha_id'=> $ficha->id,
             'type_id' => $request->type_id
         ]);
 
@@ -85,7 +78,8 @@ class FilesController extends Controller
      */
     public function show(File $file)
     {
-        return Storage::download($file->url, $file->name);
+        $extension = \Illuminate\Support\Facades\File::extension($file->url);
+        return Storage::download($file->url, $file->name . '.' . $extension);
     }
 
     /**
@@ -96,9 +90,11 @@ class FilesController extends Controller
      */
     public function edit(File $file)
     {
+        $ficha = Ficha::withTrashed()->find($file->ficha_id);
         return view('apprentices.files.edit', [
             'types' => $this->types,
-            'file' => $file,
+            'file'  => $file,
+            'ficha' => $ficha,
         ]);
     }
 
@@ -133,12 +129,14 @@ class FilesController extends Controller
      */
     public function destroy(File $file)
     {
+        $ficha = Ficha::withTrashed()->find($file->ficha_id);
+
         if (Storage::exists($file->url)) {
             Storage::delete($file->url);
         }
 
         $file->delete();
 
-        return redirect()->route('apprentices-files.index')->with('success', 'Archivo eliminado correctamente :)');
+        return redirect()->route('fichas.apprentices-files.index', $ficha)->with('success', 'Archivo eliminado correctamente :)');
     }
 }
