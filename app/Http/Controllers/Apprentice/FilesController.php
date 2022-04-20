@@ -24,16 +24,6 @@ class FilesController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Ficha $ficha)
-    {
-        return view('apprentices.files.index');
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -65,7 +55,7 @@ class FilesController extends Controller
         $name = Str::slug($this->types[$request->type_id]);
 
         $request->user()->files()->create([
-            'name'    => $name,
+            'name'    => $name . '_' . now()->timestamp,
             'url'     => $url,
             'ficha_id'=> $ficha->id,
             'type_id' => $request->type_id
