@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Mail\test;
+use App\Models\Ficha;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -57,16 +58,13 @@ Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::c
 // Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
 Route::resource('user', UserController::class)->except('show');
 
+// Rutas de instructor tecnico
+Route::get('instructor/fichas/{ficha:code}/apprentices', function (Ficha $ficha) { return view('instructors.apprentices.index'); })
+        ->withTrashed()
+        ->name('ins-tecnico.fichas.apprentices');
+// -------- Fin  rutas de instructor tecnico 
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
-
-Route::get('/mailx', function () {
-    $ft = \App\Models\FileType::inRandomOrder()->first();
-
-    $message = (new test($ft))->afterCommit();
-    Mail::to('lina2131@gmail.com')->queue($message);
-
-    return $message;
-});

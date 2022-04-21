@@ -14,9 +14,9 @@ class ChangeUserStatus extends Component
     public $userStatus;
     public $selectedStatus;
 
-    public function mount()
+    public function mount($user = null)
     {
-        $this->user = Route::current()->parameter('user');
+        $this->user = $user ?? Route::current()->parameter('user');
         
         $this->status = [
             'Certificado',

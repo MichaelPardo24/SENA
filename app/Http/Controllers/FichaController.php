@@ -25,7 +25,7 @@ class FichaController extends Controller
         $this->middleware('can:fichas_show')->only('show');
         $this->middleware('can:fichas_create')->only('create', 'store');
         $this->middleware('can:fichas_edit')->only('edit', 'update');
-        $this->middleware('can:fichas_destroy')->only('destroy', 'softDelete');
+        $this->middleware('can:fichas_delete')->only('destroy', 'softDelete');
     }
 
     /**
