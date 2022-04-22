@@ -18,7 +18,9 @@
                 <th class="px-4 py-2 font-sans font-normal border border-orange-300">Apellidos</th>
                 <th class="px-4 py-2 font-sans font-normal border border-orange-300">Correo</th>
                 <th class="px-4 py-2 font-sans font-normal border border-orange-300">Rol</th>
-                <th class="px-4 py-2 font-sans font-normal border border-orange-300"></th>
+                @hasrole("Manager|Coordinador")
+                        <th class="px-4 py-2 font-sans font-normal border border-orange-300">Acción</th>
+                @endhasrole
             </tr>
         </thead>
         <tbody>
@@ -29,11 +31,13 @@
                     <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->profile->surnames}}</a> </td>
                     <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->email}}</a> </td>
                     <td class=""><a href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $role}}</a> </td>
-                    <td class="p-1">
-                        <x-jet-danger-button class="text-sm capitalize py-1 px-2" wire:click="detach({{$user->id}})">
-                            Desvincular
-                        </x-jet-danger-button>
-                    </td>
+                    @hasrole("Manager|Coordinador")
+                        <td class="p-1">
+                            <x-jet-danger-button class="text-sm capitalize py-1 px-2" wire:click="detach({{$user->id}})">
+                                Desvincular
+                            </x-jet-danger-button>
+                        </td>
+                    @endhasrole
                 </tr>
             @endforeach
         </tbody>
