@@ -19,12 +19,12 @@
                 <tbody class="text-sm divide-y divide-gray-100">
                     @foreach ($fichas as $ficha)
                         <tr class="hover:bg-orange-50">
-                            <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->code}}</a></td>
-                            <td class="p-2 whitespace-nowrap text-left font-semibold text-gray-700"><a href="{{ route('fichas.edit', $ficha) }}">{{ Str::limit($ficha->program->name, 50)}}</a></td>
-                            <td class="p-2 whitespace-nowrap text-left font-medium text-gray-700"><a href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->start_school_stage->format('M-d-Y')}}</a></td>
-                            <td class="p-2 whitespace-nowrap text-left font-medium text-gray-700"><a href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->end_school_stage->format('M-d-Y')}}</a></td>
-                            <td class="p-2 whitespace-nowrap text-left font-medium text-gray-700"><a href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->start_production_stage->format('M-d-Y')}}</a></td>
-                            <td class="p-2 whitespace-nowrap text-left font-medium text-gray-700"><a href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->end_production_stage->format('M-d-Y')}}</a></td>
+                            <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->code}}</a></td>
+                            <td class="whitespace-nowrap text-left font-semibold text-gray-700"><a class="block p-2" class="block" href="{{ route('fichas.edit', $ficha) }}">{{ Str::limit($ficha->program->name, 50)}}</a></td>
+                            <td class="whitespace-nowrap text-left font-medium text-gray-700"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->start_school_stage->format('m-d-Y')}}</a></td>
+                            <td class="whitespace-nowrap text-left font-medium text-gray-700"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->end_school_stage->format('m-d-Y')}}</a></td>
+                            <td class="whitespace-nowrap text-left font-medium text-gray-700"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->start_production_stage->format('m-d-Y')}}</a></td>
+                            <td class="whitespace-nowrap text-left font-medium text-gray-700"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->end_production_stage->format('m-d-Y')}}</a></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -61,7 +61,7 @@ class FileTypeController extends Controller
             'url'  => $url
         ]);
 
-        return redirect()->back()->with('success', 'FileType creado correctamente :)');
+        return redirect()->back()->with('success', 'El archivo ha sido subido correctamente');
     }
 
     /**
@@ -104,7 +104,7 @@ class FileTypeController extends Controller
 
         $fileType->update($validated);
 
-        return redirect()->back()->with('success', 'FileType actualizado correctamente :)');
+        return redirect()->back()->with('success', 'El archivo ha sido modificado correctamente');
     }
 
     /**
@@ -121,6 +121,6 @@ class FileTypeController extends Controller
 
         $fileType->delete();
 
-        return redirect()->route('file-types.index')->with('success', 'FileType eliminado correctamente :)');
+        return redirect()->route('file-types.index')->with('success', 'El archivo ha sido eliminado correctamente');
     }
 }

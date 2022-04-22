@@ -16,7 +16,7 @@
         </div>
     @endif
     
-    <div class="py-12">
+    <div class="flex flex-col justify-center py-12 mx-auto rounded-sm">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
@@ -25,27 +25,37 @@
                         <p class="p-2 py-4">{{ \Session::get('success') }}</p>
                     </div>
                 @endif
-
-                <a href="{{route('file-types.create')}}" class="inline-block mx-4 my-3 text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">CREAR</a>
-
-                <table class="table-auto mx-auto my-5 shadow-lg">
-                    <thead>
-                        <tr class="bg-orange-100 text-gray-800 tracking-widest">
-                            <th class="px-4 py-2 font-sans font-normal border border-orange-300">Tipo de archivo</th>
-                            <th class="px-4 py-2 font-sans font-normal border border-orange-300">Descargar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-sm divide-y divide-gray-100">
-                        @foreach ($fileTypes as $fileType)
-                            <tr class=" odd:bg-orange-200 even:bg-orange-50 text-sm text-gray-600 border border-orange-300 hover:bg-orange-300 cursor-pointer">
-                                <td><a href="{{ route('file-types.edit', $fileType) }}" class="block px-4 py-2"> {{ $fileType->name}}</a> </td>
-                                <td><a href="{{ route('file-types.show', $fileType) }}" class="block px-4 py-2"> Descargar </a> </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
-                    {{ $fileTypes->links() }}
+                <div class="m-5">
+                    @can("file-types_create")
+                        <div class="px-2 py-4 ">
+                            <a href="{{route('file-types.create')}}" class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white">CREAR</a>
+                        </div>
+                    @endcan
+                    <div>
+                        <table class="table-auto w-full">
+                            <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
+                                <tr>
+                                    <th class="text-left p-3 whitespace-nowrap font-semibold">Tipo de archivo</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm divide-y divide-gray-100">
+                                @foreach ($fileTypes as $fileType)
+                                    <tr class="hover:bg-orange-50">
+                                        @can('file-types_edit')
+                                            <td class="whitespace-nowrap text-left font-semibold text-gray-800"><a href="{{ route('file-types.edit', $fileType) }}" class="block p-2">{{ $fileType->name}}</a> </td>
+                                        @else
+                                            <td class="whitespace-nowrap p-2 text-left font-semibold text-gray-800">{{ $fileType->name}}</td>
+                                        @endcan
+                                        <td class="text-center whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('file-types.show', $fileType) }}" class="block p-2">Descargar</a></td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
+                        {{ $fileTypes->links() }}
+                    </div>
                 </div>
             </div>
         </div>

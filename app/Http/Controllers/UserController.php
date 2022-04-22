@@ -64,8 +64,17 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $roles = Role::all();
-        return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
+        if (auth()->user()->hasrole('Manager|Coordinador')) {
+            $roles = Role::all();
+            return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
+        } else {
+            if ($user->hasrole('Manager|Coordinador|Instructor Tecnico|Instructor Seguimiento')){
+                return redirect("user")->with(['error' => 'No puedes modificar este usuario']);
+            } else {
+                $roles = Role::all();
+                return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
+            }
+        }
     }
 
     /**

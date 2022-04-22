@@ -22,10 +22,10 @@ class FichaController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('can:fichas_index')->only('index');
-        $this->middleware('can:fichas_show')->only('show');
         $this->middleware('can:fichas_create')->only('create', 'store');
         $this->middleware('can:fichas_edit')->only('edit', 'update');
-        $this->middleware('can:fichas_destroy')->only('destroy', 'softDelete');
+        $this->middleware('can:fichas_destroy')->only('destroy');
+        $this->middleware('can:fichas_soft_delete')->only('softDelete');
     }
 
     /**
@@ -35,8 +35,6 @@ class FichaController extends Controller
      */
     public function index()
     {
-        // $this->authorize('fichas_access');
-        
         return view('admin.fichas.index');
     }
 
@@ -63,19 +61,7 @@ class FichaController extends Controller
         $validated = $request->validated();
         Ficha::create($validated);
 
-        return redirect()->back()->with('success', 'Ficha creada correctamente :)');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ficha  $ficha
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ficha $ficha)
-    {
-        // $users = $ficha->users();
-        return view('admin.fichas.show', compact('ficha'));
+        return redirect()->back()->with('success', 'Ficha creada correctamente');
     }
 
     /**
@@ -107,7 +93,7 @@ class FichaController extends Controller
         $validated = $request->validated();
         $ficha->update($validated);
 
-        return redirect()->back()->with('success', 'Ficha Actualizada correctamente :)');
+        return redirect()->back()->with('success', 'Ficha Actualizada correctamente');
     }
 
     /**
@@ -120,7 +106,7 @@ class FichaController extends Controller
     {
         $ficha->forceDelete();
 
-        return redirect()->route('fichas.index')->with('success', 'Ficha eliminada correctamente :)');
+        return redirect()->route('fichas.index')->with('success', 'Ficha eliminada correctamente');
     }
 
     /**
@@ -133,6 +119,6 @@ class FichaController extends Controller
     {
         $ficha->delete();
 
-        return redirect()->route('fichas.index')->with('success', 'Ficha archivada correctamente :)');
+        return redirect()->route('fichas.index')->with('success', 'Ficha archivada correctamente');
     }
 }
