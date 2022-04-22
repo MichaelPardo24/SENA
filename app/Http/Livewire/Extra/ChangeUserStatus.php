@@ -14,7 +14,7 @@ class ChangeUserStatus extends Component
     public $userStatus;
     public $selectedStatus;
 
-    public function mount($user = null)
+    public function mount($user = null, $ficha = null)
     {
         $this->user = $user ?? Route::current()->parameter('user');
         
@@ -25,7 +25,7 @@ class ChangeUserStatus extends Component
             'Preparado'
         ];
 
-        $this->fichaId = Route::current()->parameter('ficha')->id;       
+        $this->fichaId = $ficha ?? Route::current()->parameter('ficha')->id;       
 
         $this->userStatus = $this->user->fichas()
                 ->where('ficha_id', $this->fichaId)
@@ -43,10 +43,14 @@ class ChangeUserStatus extends Component
 
     public function updatedSelectedStatus()
     {
-        $this->user->fichas()->updateExistingPivot($this->fichaId, [
-            'status' => $this->selectedStatus,
-        ]);
-
-        $this->emit('status-changed');
+        try {
+            $this->user->fichas()->updateExistingPivot($this->fichaId, [
+                'status' => $this->selectedStatus,
+            ]);
+    
+            $this->emit('status-changed');
+        } catch (\Throwable $th) {
+            $this->emit('status-failed');
+        }
     }
 }
