@@ -1,10 +1,12 @@
 <div class="mt-4">
-    {{-- Filters --}}
+
+    {{-- Filtros --}}
+    <h3 class="text-center italic uppercase text-gray-700">Filtros</h3>
     <div class="mb-4 flex px-3 gap-3 flex-wrap">
         <x-jet-input type="text" wire:model.debounce.600ms="filters.search" class="block w-full sm:flex-1 shadow-md" placeholder="Busca aquí..."/>
         <div class="mx-auto">
             <select name="fichaStatus" id="fichaStatus" wire:model="filters.selectedStatus">
-                <option value="" selected>- Estado -</option>
+                <option value="" selected>- Buscar por Estado -</option>
                 @foreach ($this->fichaStatus as $fs)
                     <option value="{{$fs}}">{{$fs}}</option>
                 @endforeach
@@ -12,18 +14,58 @@
         </div>
     </div>
 
+    @if (! $this->ficha->trashed())
+        <div class="w-11/12 rounded my-4 mx-auto border border-gray-400"></div>
+        <h3 class="text-center italic uppercase text-gray-700">Acciones</h3>
+
+        {{-- Cambiar el estado de todos los alumnos --}}
+        <div class="mb-4 flex px-3 gap-3 flex-wrap items-center">
+
+            <div class="mx-auto">
+                <select name="fichaFullStatus" id="fichaFullStatus" wire:model="selectedFullStatus" class="rounded-md bg-orange-100">
+                    <option value="" selected>- Modificar Estado -</option>
+                    @foreach ($this->fichaStatus as $fs)
+                        <option value="{{$fs}}">{{$fs}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- Mustra el botón solo si se ha seleccionado un estado --}}
+            <div class="flex-1" x-data="{ showButton: @entangle('selectedFullStatus') }">
+                <template x-if="showButton">
+                    <x-jet-secondary-button @click="$wire.updateAllApprenticesStatus()">
+                        Modificar Estado
+                    </x-jet-secondary-button>
+                </template>
+                <span class="text-xs italic"> <- Modifica el estado de TODOS los alumnos</span>
+            </div>
+
+        </div>
+
+        {{-- 
+            Se muestra mientras se renderiza de nuevo luego de modificar el estado de todos
+            los aprendices 
+        --}}
+        <div wire:loading wire:target="updateAllApprenticesStatus" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-min bg-slate-300 rounded-md shadow-black/40 shadow-lg">
+            <div class="p-4">
+                <p class="text-center my-auto">Cargando...</p>
+            </div>
+        </div>
+    @endif
+
+
     @if ($apprentices->count())
         {{-- Table --}}
         <div class="w-full mx-auto p-3 overflow-x-auto">
             <table class="table-auto w-full">
                 <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
-                        <tr>
-                            <th class="p-3 whitespace-nowrap font-semibold">Documento</th>
-                            <th class="p-3 whitespace-nowrap font-semibold">Nombre Completo</th>
-                            <th class="p-3 whitespace-nowrap font-semibold">Correo</th>
-                            <th class="p-3 whitespace-nowrap font-semibold">Estado</th>
-                            <th class="p-3 whitespace-nowrap font-semibold"></th>
-                        </tr>
+                    <tr>
+                        <th class="p-3 whitespace-nowrap font-semibold">Documento</th>
+                        <th class="p-3 whitespace-nowrap font-semibold">Nombre Completo</th>
+                        <th class="p-3 whitespace-nowrap font-semibold">Correo</th>
+                        <th class="p-3 whitespace-nowrap font-semibold">Estado</th>
+                        <th class="p-3 whitespace-nowrap font-semibold"></th>
+                    </tr>
                 </thead>
                 <tbody class="text-sm divide-y divide-gray-100">
                     @foreach ($apprentices as $key => $apprentice)
@@ -63,7 +105,7 @@
         {{-- More Info and editing modal --}}
         <x-jet-dialog-modal wire:model="openModal">
             @slot('title')
-                {{ $apprentices[$this->n]->profile->full_name }}
+                {{ $apprentices[$this->n]->profile->full_name }} {{-- 'n' hace referencia al index que cada alumno tiene en la colección --}}
             @endslot
 
             @slot('content')
@@ -135,5 +177,27 @@
             <p class="text-center italic">No hay resultados para la busqueda <i class="fa-solid fa-cloud-showers-heavy"></i></p>
         </div>
     @endif
-</div>
 
+
+    {{-- 'Notificaciones'. Se muestran cuando se realiza el cambio de estado a TODOS los alumnos --}}
+    <div 
+        x-data="{ show: false }"
+        x-cloak
+        x-show="show"
+        x-transition.scale.origin.right
+        x-init="$wire.on('full-status-changed', () => { show = true; setTimeout(() => { show = false }, 2500) })"
+        class="absolute top-14 right-0 rounded bg-green-200 border-l-4 border-green-600 text-slate-700 p-4"
+        style="display: none !important;">
+            Estado actualizado
+    </div>
+    <div 
+        x-data="{ show: false }"
+        x-cloak
+        x-show="show"
+        x-transition.scale.origin.right
+        x-init="$wire.on('full-status-failed', () => { show = true; setTimeout(() => { show = false }, 2500) })"
+        class="absolute top-14 right-0 rounded bg-red-200 border-l-4 border-red-600 text-slate-700 p-4"
+        style="display: none !important;">
+            Error al modificar estado :(
+    </div>
+</div>

@@ -28,10 +28,10 @@ class ChangeUserStatus extends Component
         $this->fichaId = $ficha ?? Route::current()->parameter('ficha')->id;       
 
         $this->userStatus = $this->user->fichas()
+                ->withTrashed()
                 ->where('ficha_id', $this->fichaId)
                 ->first()
-                ->pivot
-                ->status;
+                ->pivot->status;
 
         $this->selectedStatus = $this->userStatus;
     }

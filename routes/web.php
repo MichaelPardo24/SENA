@@ -59,7 +59,7 @@ Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::c
 Route::resource('user', UserController::class)->except('show');
 
 // Rutas de instructor tecnico
-Route::get('instructor/fichas/{ficha:code}/apprentices', function (Ficha $ficha) { return view('instructors.apprentices.index'); })
+Route::get('instructor-tecnico/fichas/{ficha:code}/apprentices', [\App\Http\Controllers\InsTecnico\ApprenticesController::class, 'index'])
         ->withTrashed()
         ->name('ins-tecnico.fichas.apprentices');
 // -------- Fin  rutas de instructor tecnico 

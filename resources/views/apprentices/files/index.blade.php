@@ -18,6 +18,7 @@
                 
                 <h3 class="block p-4 text-slate-800">Mis Archivos:</h3>
 
+                {{-- Livewire --}}
                 {{ $slot }}
             </div>
         </div>
