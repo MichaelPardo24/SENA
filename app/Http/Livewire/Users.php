@@ -21,17 +21,30 @@ class Users extends Component
 
     public function render()
     {
-
-        $users = User::WhereHas('profile', function($q){
-                        $q->where('names', 'LIKE', "%$this->search%");
-                        $q->orWhere('surnames', 'LIKE', "%$this->search%");
-                        $q->orWhere('document_type', 'LIKE', "%$this->search%");
-                        $q->orWhere('id', 'LIKE', "%$this->search%");
-                    })
-                    ->orWhere('document', 'LIKE', "%$this->search%")
-                    ->orWhere('email', 'LIKE', "%$this->search%")
-                    ->paginate($this->perPage);
-
+        if (auth()->user()->hasrole("Manager|Coordinador")) {
+            $users = User::WhereHas('profile', function($q){
+                            $q->where('names', 'LIKE', "%$this->search%");
+                            $q->orWhere('surnames', 'LIKE', "%$this->search%");
+                            $q->orWhere('document_type', 'LIKE', "%$this->search%");
+                            $q->orWhere('id', 'LIKE', "%$this->search%");
+                        })
+                        ->orWhere('document', 'LIKE', "%$this->search%")
+                        ->orWhere('email', 'LIKE', "%$this->search%")
+                        ->orderBy('id', 'desc')
+                        ->paginate($this->perPage);
+        } else {
+            $users = User::WhereHas('profile', function($q){
+                            $q->where('names', 'LIKE', "%$this->search%");
+                            $q->orWhere('surnames', 'LIKE', "%$this->search%");
+                            $q->orWhere('document_type', 'LIKE', "%$this->search%");
+                            $q->orWhere('id', 'LIKE', "%$this->search%");
+                        })
+                        ->orWhere('document', 'LIKE', "%$this->search%")
+                        ->orWhere('email', 'LIKE', "%$this->search%")
+                        ->orderBy('id', 'desc')
+                        ->role('Aprendiz')
+                        ->paginate($this->perPage);
+        }
         return view('livewire.users', compact('users'));
     }
 }

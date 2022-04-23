@@ -21,8 +21,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-
-Route::resource('programs', \App\Http\Controllers\ProgramsController::class);
+//programas
+Route::resource('programs', \App\Http\Controllers\ProgramsController::class)
+        ->except('show');
+        
 Route::resource('file-types', \App\Http\Controllers\FileTypeController::class);
 
 // Fichas
@@ -31,6 +33,7 @@ Route::delete('ficha/{ficha:code}', [\App\Http\Controllers\FichaController::clas
 
 // crud
 Route::resource('fichas', \App\Http\Controllers\FichaController::class)
+        ->except('show')
         ->scoped(['ficha' => 'code']);
 
 // Archivos de usuarios por fichas
@@ -56,7 +59,8 @@ Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::c
         ->name('fichas.users.index');
 
 // Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
-Route::resource('user', UserController::class)->except('show');
+Route::resource('user', UserController::class)
+        ->except('show');
 
 // Rutas de instructor tecnico
 Route::get('instructor-tecnico/fichas/{ficha:code}/apprentices', [\App\Http\Controllers\InsTecnico\ApprenticesController::class, 'index'])

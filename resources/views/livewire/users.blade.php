@@ -29,53 +29,58 @@
                     <th class="p-3 whitespace-nowrap">
                         <div class="text-center font-semibold ">Actualización</div>
                     </th>
-                    <th class="p-3 whitespace-nowrap">
-                        <div class="text-center font-semibold ">Rol</div>
-                    </th>
+                    @role("Coordinador|Manager")
+                        <th class="p-3 whitespace-nowrap">
+                            <div class="text-center font-semibold ">Rol</div>
+                        </th>
+                    @endrole
                 </tr>
             </thead>
             <tbody class="text-sm divide-y divide-gray-100">
                 @foreach ($users as $user)
-                    <tr class="hover:bg-orange-50">
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-extrabold text-gray-900">
-                                <a href="{{ route('user.edit', $user->id) }}">{{$user->id}}</a>
-                            </div>
-                        </td>
-                        <td class="p-2 whitespace-nowrap flex justify-start">
-                                <div class="py-2">
-                                    <a href="{{ route('user.edit', $user->id) }}"><img alt="avatar" width="48" height="48" class="rounded-full w-8 h-8 shadow-lg" src="{{$user->profile_photo_url}}"></a>
+                    @if($user->id != auth()->user()->id)                            
+                        <tr class="hover:bg-orange-50">
+                            <td class="whitespace-nowrap">
+                                <div class="text-center font-extrabold text-gray-900">
+                                    <a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->id}}</a>
                                 </div>
-                                <a href="{{ route('user.edit', $user->id) }}"><div class="font-semibold text-gray-800 pt-4 ml-2">{{Str::limit($user->profile->names." ".$user->profile->surnames, 30)}}</div></a>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <a href="{{ route('user.edit', $user->id) }}">
-                                <div class="text-center font-medium text-gray-700">
-                                    {{$user->email}}
+                            </td>
+                            <td class="whitespace-nowrap flex justify-start">
+                                    <div>
+                                        <a class="p-2 block" href="{{ route('user.edit', $user->id) }}"><img alt="avatar" width="48" height="48" class="rounded-full w-8 h-8 shadow-lg" src="{{$user->profile_photo_url}}"></a>
+                                    </div>
+                                    <a href="{{ route('user.edit', $user->id) }}"><div class="font-semibold text-gray-800 pt-4 ml-2">{{Str::limit($user->profile->names." ".$user->profile->surnames, 30)}}</div></a>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <a class="p-2 block" href="{{ route('user.edit', $user->id) }}">
+                                    <div class="text-center font-medium text-gray-700">
+                                        {{$user->email}}
+                                    </div>
+                                </a>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <div class="text-center font-medium text-gray-700"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->profile->document}}</a>
                                 </div>
-                            </a>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-medium text-gray-700"><a href="{{ route('user.edit', $user->id) }}">{{$user->profile->document}}</a>
-                            </div>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-medium text-gray-700"><a href="{{ route('user.edit', $user->id) }}">{{$user->profile->document_type}}</a>
-                            </div>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-medium text-gray-800"><a href="{{ route('user.edit', $user->id) }}">{{$user->created_at->format('d/M/Y')}}</a>
-                            </div>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-medium text-gray-800"><a href="{{ route('user.edit', $user->id) }}">{{ $user->updated_at->format('d/M/Y') }}</a>
-                            </div>
-                        </td>
-                        <td class="p-2 whitespace-nowrap">
-                            <div class="text-center font-medium text-gray-800"><a href="{{ route('user.edit', $user->id) }}">{{ $user->roles()->first()->name }}</a>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <div class="text-center font-medium text-gray-700"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->profile->document_type}}</a>
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->created_at->format('d/M/Y')}}</a>
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap">
+                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{ $user->updated_at->format('d/M/Y') }}</a>
+                                </div>
+                            </td>
+                            @role("Coordinador|Manager")
+                                <td class="whitespace-nowrap">
+                                    <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{ $user->roles()->first()->name }}</a></div>
+                                </td>
+                            @endrole
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

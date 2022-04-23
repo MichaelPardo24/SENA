@@ -20,7 +20,9 @@
                 <div class="flex justify-between p-4">         
                     <a href="{{route('fichas.index')}}" class="inline-block text-center rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900"><- FICHAS</a>
 
-                    <livewire:fichas.add-user :ficha="$ficha->id"/>
+                    @hasrole("Coordinardor|Manager")
+                        <livewire:fichas.add-user :ficha="$ficha->id"/>
+                    @endhasrole
                 </div>
 
                 {{-- table --}}
