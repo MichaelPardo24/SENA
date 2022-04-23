@@ -3,7 +3,7 @@
         <a class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white" href="{{ route('fichas.create') }}">Crear</a>
         <x-jet-input type="text" wire:model.debounce.500ms="search" class="block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
     </header>
-    <div class="p-3">
+    <div class="p-3 overflow-x-auto">
         @if (count($fichas))
             <table class="table-auto w-full">
                 <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
