@@ -5,7 +5,7 @@
         @endcan
         <x-jet-input type="text" wire:model.debounce.300ms="search" class="ml-4 block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
     </header>
-    <div class="p-3">
+    <div class="p-3 overflow-x-auto">
         @if (count($programs))
             <table class="table-auto w-full">
                 <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">

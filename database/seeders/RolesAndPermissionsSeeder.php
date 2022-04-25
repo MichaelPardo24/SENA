@@ -65,10 +65,10 @@ class RolesAndPermissionsSeeder extends Seeder
                     'users_status',
                     'users_index',
 
-                    'fichas_index',
-                    'fichas_create',
                     'fichas_edit',
+                    'fichas_create',
                     'fichas_soft_delete',
+                    'fichas_index',
 
                     'programs_index',
 

@@ -1,9 +1,9 @@
 <div>
     <header class="flex justify-between px-6 py-4 border-b border-gray-100">
         <a class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white" href="{{ route('user.create') }}">Crear</a>
-        <x-jet-input type="text" wire:model.debounce.500ms="search" class="mx-4 block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
+        <x-jet-input type="text" wire:model.debounce.500ms="search" class="block w-10/12 mx-auto shadow-md" placeholder="Busca aquí"/>
     </header>
-    <div class="p-3">
+    <div class="p-3 overflow-x-auto">
         @if (count($users))
         <table class="table-auto w-full">
             <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
@@ -18,10 +18,10 @@
                         <div class="text-center font-semibold ">EMAIL</div>
                     </th>
                     <th class="p-3 whitespace-nowrap">
-                        <div class="text-center font-semibold text-center">Documento</div>
+                        <div class="font-semibold text-center">Documento</div>
                     </th>
                     <th class="p-3 whitespace-nowrap">
-                        <div class="text-center font-semibold text-center mr-1 ">Tipo</div>
+                        <div class="font-semibold text-center mr-1 ">Tipo</div>
                     </th>
                     <th class="p-3 whitespace-nowrap">
                         <div class="text-center font-semibold ">Creación</div>

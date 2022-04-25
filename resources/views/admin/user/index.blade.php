@@ -26,11 +26,9 @@
         </div>
     @endif
     <div class="py-10">
-        <div class="flex flex-col justify-center">
-            <div class="mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
-                {{-- table --}}
-                <livewire:users />
-            </div>
+        <div class="mx-auto bg-white shadow-lg rounded-sm border border-gray-200">
+            {{-- table --}}
+            <livewire:users />
         </div>
     </div>
 </x-app-layout>

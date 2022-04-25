@@ -16,7 +16,7 @@
         </div>
     @endif
     
-    <div class="flex flex-col justify-center py-12 mx-auto rounded-sm">
+    <div class="py-12 mx-auto rounded-sm">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
 
@@ -31,7 +31,7 @@
                             <a href="{{route('file-types.create')}}" class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white">CREAR</a>
                         </div>
                     @endcan
-                    <div>
+                    <div class="overflow-x-auto">
                         <table class="table-auto w-full">
                             <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
                                 <tr>
@@ -47,7 +47,7 @@
                                         @else
                                             <td class="whitespace-nowrap p-2 text-left font-semibold text-gray-800">{{ $fileType->name}}</td>
                                         @endcan
-                                        <td class="text-center whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('file-types.show', $fileType) }}" class="block p-2">Descargar</a></td>
+                                        <td class="whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('file-types.show', $fileType) }}" class="block p-2">Descargar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
