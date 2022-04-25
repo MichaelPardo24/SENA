@@ -4,11 +4,11 @@ namespace App\Http\Livewire\Extra;
 
 use Livewire\Component;
 
-class ListUserFichas extends Component
+class ListApprenticeFichas extends Component
 {
     public function render()
     {
         $fichas = auth()->user()->fichas()->withTrashed()->get();
-        return view('livewire.extra.list-user-fichas', compact('fichas'));
+        return view('livewire.extra.list-apprentice-fichas', compact('fichas'));
     }
 }

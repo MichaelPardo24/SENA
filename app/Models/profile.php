@@ -23,6 +23,17 @@ class Profile extends Model
         'user_id',
     ];
 
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->names} {$this->surnames}";
+    }
+    
+    // ----- Relationships ------ //
     public function User()
     {
         return $this->belongsTo(User::class); 
