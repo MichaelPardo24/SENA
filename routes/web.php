@@ -52,11 +52,13 @@ Route::get('fichas/{ficha}/user/{user}', [\App\Http\Controllers\Fichas\Apprentic
 // --------- Fin archivos de usuario por fichas
 
 // Informacion del aprendiz por ficha
-Route::get('fichas/{ficha:code}/apprentices/{user:document}', [\App\Http\Controllers\Fichas\ApprenticeController::class, 'show'])
+Route::group(['middleware' => ['role:Manager|Coordinador']], function () {
+        Route::get('fichas/{ficha:code}/apprentices/{user:document}', [\App\Http\Controllers\Fichas\ApprenticeController::class, 'show'])
         ->name('fichas.users.show');
-
-Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::class)
+        Route::get('fichas/{ficha:code}/users', \App\Http\Livewire\Fichas\Apprentices::class)
         ->name('fichas.users.index');
+    });
+
 
 // Route::resource('users.files', \App\Http\Controllers\UserFileController::class)->shallow();
 Route::resource('user', UserController::class)
