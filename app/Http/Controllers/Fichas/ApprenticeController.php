@@ -20,10 +20,14 @@ class ApprenticeController extends Controller
      */
     public function show(Ficha $ficha, User $user)
     {
-        return view('admin.fichas.users.show', [
-            'user'  => $user,
-            'ficha' => $ficha
-        ]);
+        if ($user->hasrole('Aprendiz')){
+            return view('admin.fichas.users.show', [
+                'user'  => $user,
+                'ficha' => $ficha
+            ]);
+        } else {
+            abort(404);
+        }
     }
 
     /**
@@ -33,7 +37,7 @@ class ApprenticeController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function downloadAllFiles(?Ficha $ficha, User $user)
+    public function downloadAllFiles(Ficha $ficha, User $user)
     {
         $zip = new ZipArchive;
         $zipName = 'archivos.zip';
@@ -45,20 +49,16 @@ class ApprenticeController extends Controller
         }
 
         if ($zip->open(Storage::path('zip/'. $zipName), \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
-
             $downloadFiles = $files->get();
-
             foreach ($downloadFiles as $file) {    
                 if (Storage::exists($file->url)) {
                     $extension = \Illuminate\Support\Facades\File::extension($file->url);
                     $zip->addFile(Storage::path($file->url), $file->name.'.'.$extension);
                 }
             }
-
             $zip->close();
             return response()->download(Storage::path('zip/'. $zipName));
         }
-
-        return redirect()->back()->with('fail', "Can't create a zip file :(");
+        return redirect()->back()->with('fail', "No se puede crear un archivo zip");
     }
 }
