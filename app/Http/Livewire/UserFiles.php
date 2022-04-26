@@ -35,4 +35,9 @@ class UserFiles extends Component
 
         return view('livewire.user-files', compact('files'));
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }

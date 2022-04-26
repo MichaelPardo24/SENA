@@ -36,4 +36,9 @@ class Programs extends Component
 
         return view('livewire.programs')->with(['programs' => $programs, 'message' => $this->message]);
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }

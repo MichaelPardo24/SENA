@@ -57,4 +57,9 @@ class Users extends Component
         }
         return view('livewire.users')->with(['users' => $users, 'message' => $this->message]);
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }

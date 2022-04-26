@@ -64,4 +64,9 @@ class Fichas extends Component
         $this->item->forceDelete();
         $this->reset(['open_destroy']);
     }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
 }
