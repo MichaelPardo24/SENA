@@ -17,7 +17,7 @@ class ChangeUserStatus extends Component
     public function mount($user = null, $ficha = null)
     {
         $this->user = $user ?? Route::current()->parameter('user');
-        
+
         $this->status = [
             'Certificado',
             'Finalizado',
@@ -25,7 +25,7 @@ class ChangeUserStatus extends Component
             'Preparado'
         ];
 
-        $this->fichaId = $ficha ?? Route::current()->parameter('ficha')->id;       
+        $this->fichaId = $ficha ?? Route::current()->parameter('ficha')->id;
 
         $this->userStatus = $this->user->fichas()
                 ->withTrashed()
@@ -37,7 +37,7 @@ class ChangeUserStatus extends Component
     }
 
     public function render()
-    {        
+    {
         return view('livewire.extra.change-user-status', ['status' => $this->status, 'userStatus' => $this->userStatus]);
     }
 
@@ -47,7 +47,7 @@ class ChangeUserStatus extends Component
             $this->user->fichas()->updateExistingPivot($this->fichaId, [
                 'status' => $this->selectedStatus,
             ]);
-    
+
             $this->emit('status-changed');
         } catch (\Throwable $th) {
             $this->emit('status-failed');
