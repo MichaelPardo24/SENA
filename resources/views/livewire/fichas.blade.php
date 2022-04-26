@@ -21,7 +21,7 @@
                 Regresar
             </button>
         @else
-            <button wire:click="$set('showSoftDeletes', true)" class="bg-purple-500 font-bold py-2 px-4 border rounded hover:bg-purple-400 text-white">
+            <button wire:click="$set('showSoftDeletes', true)" class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white">
                 Ver Archivados
             </button>
         @endif
@@ -38,9 +38,11 @@
                             <th class="p-3 whitespace-nowrap font-semibold">Fin Lectiva</th>
                             <th class="p-3 whitespace-nowrap font-semibold">Inicio Prod.</th>
                             <th class="p-3 whitespace-nowrap font-semibold">Fin Prod.</th>
-                            @if ($showSoftDeletes == true)
-                                <th class="p-3 whitespace-nowrap font-semibold">Acciones</th>
-                            @endif
+                            @role('Manager')
+                                @if ($showSoftDeletes == true)
+                                    <th class="p-3 whitespace-nowrap font-semibold">Acciones</th>
+                                @endif
+                            @endrole
                         </tr>
                 </thead>
                 <tbody class="text-sm divide-y divide-gray-100">
@@ -53,14 +55,16 @@
                                 <td class="p-2 whitespace-nowrap text-center font-medium text-gray-700">{{ $ficha->end_school_stage->format('m-d-Y')}}</td>
                                 <td class="p-2 whitespace-nowrap text-center font-medium text-gray-700">{{ $ficha->start_production_stage->format('m-d-Y')}}</td>
                                 <td class="p-2 whitespace-nowrap text-center font-medium text-gray-700">{{ $ficha->end_production_stage->format('m-d-Y')}}</td>
-                                <td class="text-center font-medium text-gray-700">
-                                    <x-jet-danger-button class="py-1" wire:click="destroy({{ $ficha->id }})">
-                                        ELIMINAR
-                                    </x-jet-danger-button>
-                                    <button wire:click="restore({{ $ficha->id }})" class="bg-green-500 py-1 px-4 border rounded hover:bg-green-400 text-white">
-                                        RECUPERAR
-                                    </button>
-                                </td>
+                                @role('Manager')
+                                    <td class="text-center font-medium text-gray-700">
+                                        <x-jet-danger-button class="py-1" wire:click="destroy({{ $ficha->id }})">
+                                            ELIMINAR
+                                        </x-jet-danger-button>
+                                        <button wire:click="restore({{ $ficha->id }})" class="bg-green-500 py-1 px-4 border rounded hover:bg-green-400 text-white">
+                                            RECUPERAR
+                                        </button>
+                                    </td>
+                                @endrole
                             @else
                                 <td class="whitespace-nowrap text-center font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.edit', $ficha) }}">{{ $ficha->code}}</a></td>
                                 <td class="whitespace-nowrap text-left font-semibold text-gray-700"><a class="block p-2" class="block" href="{{ route('fichas.edit', $ficha) }}">{{ Str::limit($ficha->program->name, 50)}}</a></td>
@@ -77,10 +81,10 @@
             <div class="bg-white px-4 py—3 border—t text-gray-500 sm:px-6">
                 No hay resultados para la busqueda "{{$search}}" en la pagina {{$page}}
             </div>
+            <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
+                {{ $fichas->links() }}
+            </div>
         @endif
-        <div class="px-4 mt-5 py—3 border—t  sm:px-6 text-center italic text-sm">
-            {{ $fichas->links() }}
-         </div>
     </div>
 
     <x-jet-dialog-modal wire:model="open_destroy">
