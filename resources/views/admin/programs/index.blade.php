@@ -16,9 +16,9 @@
         </div>
     @endif
     <div class="py-10">
-        <div class="mx-auto bg-white shadow-lg rounded-sm border border-gray-200">            
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white shadow-lg rounded-sm border border-gray-200">            
             {{-- table --}}
-            <livewire:programs />
+            <livewire:programs :message="session('success')" />
         </div>
     </div>
 </x-app-layout>
