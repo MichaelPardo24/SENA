@@ -174,17 +174,20 @@
                                     Usuarios vinculados: {{ $ficha->users_count }}
                                 </span>
 
-                                <a href="{{ route('fichas.users.index', $ficha) }}"
-                                    class="block w-full font-semibold uppercase tracking-widest rounded bg-green-700 text-xs text-green-200 px-4 py-2 mt-4 text-center transition-all duration-300 hover:bg-green-900">Ver
-                                    Usuarios Vinculados</a>
+                                @role("Manager|Coordinador")
+                                    <a href="{{ route('fichas.users.index', $ficha) }}"
+                                        class="block w-full font-semibold uppercase tracking-widest rounded bg-green-700 text-xs text-green-200 px-4 py-2 mt-4 text-center transition-all duration-300 hover:bg-green-900">
+                                            Ver Usuarios Vinculados
+                                    </a> 
+                                @endrole
                             </div>
 
                         </div>
 
-                        <div class="p-3 shadow-lg bg-purple-200 rounded">
-                            {{-- Formulario de eliminacion --}}
-                            <p class="italic text-purple-600 text-sm text-center">Dar de baja a una ficha</p>
-                            @can("fichas_soft_delete")
+                        {{-- Formulario de eliminacion --}}
+                        @role("Manager|Coordinador")
+                            <div class="p-3 shadow-lg bg-purple-200 rounded">
+                                <p class="italic text-purple-600 text-sm text-center">Dar de baja a una ficha</p>
                                 <div class="p-3">
                                     <button data-modal-toggle="popup-modal-archivar" data-id="{{ $ficha->id }}"
                                         class="block w-full items-center px-4 py-2 bg-purple-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-purple-500 active:bg-purple-900 focus:outline-none focus:border-purple-900 focus:ring focus:ring-purple-300 disabled:opacity-25 transition">
@@ -238,8 +241,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            @endcan
-                        </div>
+                            </div>
+                        @endrole
+                        
 
                         @hasrole('Coordinador|Manager')
                             <div class="p-3 shadow-lg bg-red-300 rounded">
