@@ -15,36 +15,39 @@ class CreateFollowUpsTable extends Migration
     {
         Schema::create('follow_ups', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date');
-            $table->timestamp('start_ps_date');
-            $table->timestamp('end_ps_date')->nullable();
+            $table->timestamp('start_date')->nullable();
             
-            // Company
-            $table->unsignedBigInteger('cod_company');
-            $table->string('name_company');
-            $table->string('address_company');
+            // Info de la compañia / empresa
+            $table->string('company_cod');
+            $table->string('company_name');
+            $table->string('company_address');
 
-            // Boss
-            $table->string('name_boss');
-            $table->string('email_boss')->nullable();
-            $table->string('phone_boss', 50);
+            // Info del jefe inmediato
+            $table->string('boss_name');
+            $table->string('boss_phone')->nullable();
+            $table->string('boss_email', 50);
 
+            // Info del sitio
             $table->string('town')->nullable();
             $table->string('dependency')->nullable();
+
+            // Info del seguimiento
             $table->enum('status', [
                 'Completo',
                 'Incompleto',
             ])->default('Incompleto');
 
             // Visits
-            $table->timestamp('first_visit')->nullable();
+            $table->timestamp('first_visit_date')->nullable();
             $table->mediumText('first_observation')->nullable();
-            $table->timestamp('second_visit')->nullable();
+
+            $table->timestamp('second_visit_date')->nullable();
             $table->mediumText('second_observation')->nullable();
 
             // foreign keys
+            $table->foreignId('ficha_id')->constrained('fichas');
+            $table->foreignId('apprentice_id')->constrained('users');
             $table->foreignId('type_id')->constrained('production_stage_types');
-            $table->foreignId('apprentice_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('instructor_id')->nullable()->constrained('users')->nullOnDelete();
         });
     }
