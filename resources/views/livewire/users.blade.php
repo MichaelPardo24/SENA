@@ -24,9 +24,6 @@
             <thead class="rounded-t-lg text-xs font-semibold uppercase text-white bg-orange-500">
                 <tr>
                     <th class="p-3 whitespace-nowrap">
-                        <div class="font-semibold text-left">id</div>
-                    </th>
-                    <th class="p-3 whitespace-nowrap">
                         <div class="font-semibold text-left">Nombres</div>
                     </th>
                     <th class="p-3 whitespace-nowrap">
@@ -55,11 +52,6 @@
                 @foreach ($users as $user)
                     @if($user->id != auth()->user()->id)                            
                         <tr class="hover:bg-orange-50">
-                            <td class="whitespace-nowrap">
-                                <div class="text-center font-extrabold text-gray-900">
-                                    <a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->id}}</a>
-                                </div>
-                            </td>
                             <td class="whitespace-nowrap flex justify-start">
                                     <div>
                                         <a class="p-2 block" href="{{ route('user.edit', $user->id) }}"><img alt="avatar" width="48" height="48" class="rounded-full w-8 h-8 shadow-lg" src="{{$user->profile_photo_url}}"></a>
@@ -82,11 +74,11 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap">
-                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->created_at->format('d/M/Y')}}</a>
+                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{$user->created_at->format('d/m/Y')}}</a>
                                 </div>
                             </td>
                             <td class="whitespace-nowrap">
-                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{ $user->updated_at->format('d/M/Y') }}</a>
+                                <div class="text-center font-medium text-gray-800"><a class="p-2 block" href="{{ route('user.edit', $user->id) }}">{{ $user->updated_at->format('d/m/Y') }}</a>
                                 </div>
                             </td>
                             @role("Coordinador|Manager")
