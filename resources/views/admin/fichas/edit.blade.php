@@ -77,10 +77,17 @@
                                             $ficha->end_production_stage->format('Y-m-d')" required />
                                 </div>
 
-                                <div class="my-4">
+                                <div class="mt-4">
                                     <x-jet-label value="Municipio:" />
-                                    <x-jet-input class="block mt-1 w-full" type="text" name="town" :value="old('town') ?? $ficha->town"
-                                        required />
+                                    <select name="town" class="block mt-1 w-full">
+                                        @if ($ficha->town == "Ibagué")
+                                            <option selected value="Ibague">Ibague</option>
+                                            <option value="Espinal">Espinal</option>
+                                        @else
+                                            <option selected value="Espinal">Espinal</option>
+                                            <option value="Ibague">Ibague</option>
+                                        @endif
+                                    </select>
                                 </div>
 
                                 <div class="my-4">
@@ -145,10 +152,10 @@
                                             $ficha->end_production_stage->format('Y-m-d')" required />
                                 </div>
 
-                                <div class="my-4">
+                                <div class="mt-4">
                                     <x-jet-label value="Municipio:" />
-                                    <x-jet-input readonly class="block mt-1 w-full" type="text" name="town"
-                                        :value="old('town') ?? $ficha->town" required />
+                                        <x-jet-input name="town" type="text" readonly class="block mt-1 w-full" :value="$ficha->town"
+                                            required></x-jet-input>
                                 </div>
 
                                 <div class="my-4">
