@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserRequest;
 use App\Actions\Fortify\CreateNewUser;
 use Spatie\Permission\Models\Role;
+use App\Models\Ficha;
 
 
 class UserController extends Controller
 {
+    public $user;
     public function __construct()
     {
         $this->middleware('auth');
@@ -64,15 +66,63 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        $this->user = $user;
+
+        if ($user->hasrole('Aprendiz')){
+            $apprenticeFicha = Ficha::withTrashed()
+            ->whereHas('users.roles', function ($q) {
+                $q->where('roles.name', 'Aprendiz');
+                $q->where('users.id', $this->user->id);
+            })
+            ->orderBy('id', 'desc')
+            ->take(1)
+            ->get();
+            if (!is_null($apprenticeFicha) && count($apprenticeFicha) > 0){
+                foreach ($apprenticeFicha as $ficha) {
+                    $apprenticeFicha = $ficha;
+                }
+                $user['status'] = $user->fichas()
+                    ->where('ficha_id', $apprenticeFicha->id)
+                    ->first()
+                    ->pivot->status;
+            }
+        
+        } else{
+            $apprenticeFicha = null;
+        }
+        
+        //Obtener las fichas relacionadas al instructor Tecnico
+        if ($user->hasrole('Instructor Tecnico')){
+            $tecnicoFichas = Ficha::whereHas('users.roles', function ($q) {
+                $q->where('roles.name', 'Instructor Tecnico');
+                $q->where('users.id', $this->user->id);
+            })
+            ->get();
+        } else{
+            $tecnicoFichas = null;
+        }
+
+        //Obtener las fichas relacionadas al instructor Seguimiento
+        if ($user->hasrole('Instructor Seguimiento')){
+            $seguimientoFichas = Ficha::whereHas('users.roles', function ($q) {
+                $q->where('roles.name', 'Instructor Seguimiento');
+                $q->where('users.id', $this->user->id);
+            })
+            ->get();
+        } else{
+            $seguimientoFichas = null;
+        }
+
+        //Verificar si el usuario autentificado puede obtener datos de todos los usuarios
         if (auth()->user()->hasrole('Manager|Coordinador')) {
             $roles = Role::all();
-            return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
+            return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles, 'tecnicoFichas' => $tecnicoFichas, 'seguimientoFichas' => $seguimientoFichas, 'apprenticeFicha' => $apprenticeFicha]);
         } else {
             if ($user->hasrole('Manager|Coordinador|Instructor Tecnico|Instructor Seguimiento')){
                 return redirect("user")->with(['error' => 'No puedes modificar este usuario']);
             } else {
                 $roles = Role::all();
-                return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles]);
+                return view('admin.user.edit')->with(['user'=>$user, 'roles'=>$roles, 'tecnicoFichas' => $tecnicoFichas, 'seguimientoFichas' => $seguimientoFichas, 'apprenticeFicha' => $apprenticeFicha]);
             }
         }
     }
