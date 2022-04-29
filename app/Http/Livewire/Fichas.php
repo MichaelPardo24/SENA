@@ -41,6 +41,16 @@ class Fichas extends Component
                         ->orWhere('code', 'LIKE', '%'.$this->search.'%')
                         ->orderBy('programs.name', 'desc')
                         ->paginate($this->perPage);
+
+            /*
+            Archivar fichas despues del fin de la etapa productiva
+            
+            foreach ($fichas as $ficha) {
+                if ($ficha->created_at >= $ficha->end_production_stage) {
+                    $ficha->delete();
+                }
+            }
+            */
         }
         return view('livewire.fichas')->with(['fichas' => $fichas, 'message' => $this->message]);
     }
