@@ -47,4 +47,12 @@ class Ficha extends Model
     {
         return $this->belongsTo(Program::class);
     }
+
+    /**
+     * FollowUps
+     */
+    public function followUps()
+    {
+        return $this->hasMany(FollowUp::class);
+    }
 }

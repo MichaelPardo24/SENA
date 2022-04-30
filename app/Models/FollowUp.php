@@ -52,4 +52,9 @@ class FollowUp extends Model
     {
         return $this->belongsTo(User::class, 'instructor_id');
     }
+
+    public function ficha()
+    {
+        return $this->belongsTo(Ficha::class);
+    }
 }
