@@ -20,7 +20,7 @@
 
                 {{-- Si es instructor --}}
                 @if (auth()->user()->hasRole('Instructor Tecnico'))
-                    <div class="p-4">
+                    <div class="p-4 my-3">
                         <h2 class="text-xl text-orange-600 font-semibold">Fichas asociadas</h2>
                         <p class="text-md">Estas son las fichas a las cuales ha sido asignado:</p>
                         <div class="mt-2 flex items-center">
@@ -30,6 +30,23 @@
                         @livewire('ins-tecnico.fichas')
                     </div>
                 @endif
+
+                {{-- Si es instructor de seguimiento --}}
+                @if (auth()->user()->hasRole('Instructor Seguimiento'))
+                    <div class="p-4 my-3">
+                        <h2 class="text-xl text-orange-600 font-semibold">Aprendices asociados</h2>
+                        <p class="text-md">Para ver los aprendices a los que debe realizar seguimiento de clic en el siguiente botón:</p>
+                        <a
+                            class="inline-flex items-center px-4 py-2 bg-orange-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:border-orange-600 focus:ring focus:ring-orange-300 disabled:opacity-25 transition mt-2"
+                            href="{{ route('follow-ups.index') }}">
+                            Ver Aprendices
+                        </a>
+                        
+                        {{-- Listado de fichas --}}
+                        @livewire('follow-ups.index')
+                    </div>
+                @endif
+                
             </div>
         </div>
     </div>
