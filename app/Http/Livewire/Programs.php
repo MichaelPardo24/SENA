@@ -15,6 +15,16 @@ class Programs extends Component
     public $search;
 
     public $perPage = '10';
+    public $message = null;
+
+    public function mount($message)
+    {
+        $this->message = $message;
+    }
+
+    public function closeAlert(){
+        $this->message = Null;
+    }
 
     public function render()
     {
@@ -24,6 +34,11 @@ class Programs extends Component
                             ->withCount('fichas')
                             ->paginate($this->perPage);
 
-        return view('livewire.programs', compact('programs'));
+        return view('livewire.programs')->with(['programs' => $programs, 'message' => $this->message]);
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

@@ -10,6 +10,8 @@
         <!-- Fonts -->
 
         <!-- Styles -->
+        <link rel="shortcut icon" type="image/png" href="https://senacertificados.co/wp-content/uploads/2021/10/2090px-Sena_Colombia_logo.svg_-300x294.png">
+        <link rel="shortcut icon" sizes="192x192" href="https://senacertificados.co/wp-content/uploads/2021/10/2090px-Sena_Colombia_logo.svg_-300x294.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
         <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">

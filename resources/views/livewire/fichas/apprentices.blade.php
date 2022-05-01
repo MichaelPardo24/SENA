@@ -26,10 +26,17 @@
                 <tbody class="text-sm divide-y divide-gray-100">
                     @foreach ($users as $user)
                         <tr class="hover:bg-orange-50">
-                            <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->document}}</a> </td>
-                            <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->profile->names}}</a> </td>
-                            <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->profile->surnames}}</a> </td>
-                            <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}" class="block px-4 py-2"> {{ $user->email}}</a> </td>
+                            @if ($areAprentices)
+                                <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}">{{ $user->document}}</a> </td>
+                                <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}">{{ $user->profile->names}}</a> </td>
+                                <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}">{{ $user->profile->surnames}}</a> </td>
+                                <td class="whitespace-nowrap text-left font-bold text-gray-800"><a class="block p-2" href="{{ route('fichas.users.show', [$fichaUser->code, $user]) }}">{{ $user->email}}</a> </td>
+                            @else
+                                <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $user->document}}</td>
+                                <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $user->profile->names}}</td>
+                                <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $user->profile->surnames}}</td>
+                                <td class="p-2 whitespace-nowrap text-left font-bold text-gray-800">{{ $user->email}}</td>
+                            @endif                            
                             @hasrole("Manager|Coordinador")
                                 <td class="whitespace-nowrap text-center font-bold text-gray-800 p-1">
                                     <x-jet-danger-button class="text-sm capitalize py-1 px-2" wire:click="detach({{$user->id}})">

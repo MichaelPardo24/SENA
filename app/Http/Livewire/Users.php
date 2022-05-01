@@ -18,6 +18,16 @@ class Users extends Component
 
     //cantidad de datos por pagina
     public $perPage = '10';
+    public $message = null;
+
+    public function mount($message)
+    {
+        $this->message = $message;
+    }
+
+    public function closeAlert(){
+        $this->message = Null;
+    }
 
     public function render()
     {
@@ -45,6 +55,11 @@ class Users extends Component
                         ->role('Aprendiz')
                         ->paginate($this->perPage);
         }
-        return view('livewire.users', compact('users'));
+        return view('livewire.users')->with(['users' => $users, 'message' => $this->message]);
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
     }
 }

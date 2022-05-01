@@ -17,9 +17,8 @@
     @endif
     
     <div class="py-12 mx-auto rounded-sm">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-
                 @if (\Session::has('success'))
                     <div class="bg-green-400 border-l-8 mb-4 border-green-600 text-slate-600">
                         <p class="p-2 py-4">{{ \Session::get('success') }}</p>

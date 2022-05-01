@@ -35,12 +35,19 @@ class Apprentices extends Component
 
                     ->where('document', 'LIKE', '%'.$this->search.'%')
                     ->paginate(10);
+
+        if ($this->role == "Aprendiz"){
+            $areAprentices = True;
+        } else{
+            $areAprentices = False;
+        }
         
         $ficha = Ficha::find($this->ficha);
 
         return view('livewire.fichas.apprentices', [
             'users' => $users,
-            'fichaUser' => $ficha
+            'fichaUser' => $ficha,
+            'areAprentices' => $areAprentices
             ])->layout('admin.fichas.users.index', ['ficha' => $ficha]);
     }
 

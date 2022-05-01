@@ -78,11 +78,10 @@
 
                     <div class="mt-4">
                         <x-jet-label value="Municipio:" />
-                        <x-jet-input 
-                            class="block mt-1 w-full" 
-                            type="text" 
-                            name="town" 
-                            :value="old('town')" required />
+                        <select name="town" class="block mt-1 w-full">
+                            <option value="Ibagué">Ibagué</option>
+                            <option value="Espinal">Espinal</option>
+                        </select>
                     </div>
 
                     <div class="mt-4">
@@ -101,7 +100,7 @@
                         <x-jet-button class="">
                             Crear Ficha
                         </x-jet-button>
-                        <a href="{{route('fichas.index')}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Index</a>
+                        <a href="{{route('fichas.index')}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Regresar</a>
                     </div>
                 </form>
             </div>

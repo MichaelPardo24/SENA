@@ -34,7 +34,7 @@
                             <p class="text-slate-700 text-xs italic tracking-wider">
                                 <b>Documento:</b> {{ $user->document}} | 
                                 <b>Correo:</b> {{ $user->email}} | 
-                                <b>Telefono:</b> {{ $user->profile->phone ?? 'no register'}}  
+                                <b>Telefono:</b> {{ $user->profile->phone ?? 'No registra'}}  
                             </p>
                         </div>
 
