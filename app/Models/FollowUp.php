@@ -9,24 +9,25 @@ class FollowUp extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'date',
-        'start_ps_date',
-        'end_ps_date',
-        'cod_company',
-        'name_company',
-        'address_company',
-        'name_boss',
-        'email_boss',
-        'phone_boss',
+        'start_date',
+        'company_cod',
+        'company_name',
+        'company_address',
+        'boss_name',
+        'boss_phone',
+        'boss_email',
         'town',
         'dependency',
         'status',
-        'first_visit',
+        'first_visit_date',
         'first_observation',
-        'second_visit',
+        'second_visit_date',
         'second_observation',
         'type_id',
+        'ficha_id',
         'apprentice_id',
         'instructor_id',
     ];
@@ -50,5 +51,10 @@ class FollowUp extends Model
     public function instructor()
     {
         return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function ficha()
+    {
+        return $this->belongsTo(Ficha::class);
     }
 }
