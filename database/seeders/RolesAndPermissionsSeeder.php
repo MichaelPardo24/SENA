@@ -16,6 +16,8 @@ class RolesAndPermissionsSeeder extends Seeder
     public function run()
     {
         $permissions = [
+            'view_dashboard',
+
             'change_role',
 
             'users_edit',
@@ -29,7 +31,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'files_create',
             'files_destroy',
             'files_index',
-            
+
             'fichas_edit',
             'fichas_create',
             'fichas_destroy',
@@ -60,6 +62,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'Instructor Tecnico'])
                 ->givePermissionTo([
+                    'view_dashboard',
+
                     'users_edit',
                     'users_create',
                     'users_status',
@@ -79,6 +83,8 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role = Role::create(['name' => 'Instructor Seguimiento'])
                 ->givePermissionTo([
+                    'view_dashboard',
+
                     'users_edit',
                     'users_status',
                     'users_index',
@@ -98,9 +104,11 @@ class RolesAndPermissionsSeeder extends Seeder
                     'follow-ups_destroy',
                     'follow-ups_index',
             ]);
-        
+
         $role = Role::create(['name' => 'Coordinador'])
             ->givePermissionTo([
+                'view_dashboard',
+
                 'users_edit',
                 'users_create',
                 'users_destroy',
@@ -140,7 +148,7 @@ class RolesAndPermissionsSeeder extends Seeder
                 'users_destroy',
                 'users_status',
                 'users_index',
-                
+
                 'fichas_edit',
                 'fichas_create',
                 'fichas_destroy',
@@ -151,14 +159,14 @@ class RolesAndPermissionsSeeder extends Seeder
                 'programs_edit',
                 'programs_create',
                 'programs_destroy',
-                
+
 
                 'file-types_show',
                 'file-types_edit',
                 'file-types_create',
                 'file-types_destroy',
                 'file-types_index',
-                
+
                 'follow-ups_show',
                 'follow-ups_edit',
                 'follow-ups_create',
@@ -171,11 +179,13 @@ class RolesAndPermissionsSeeder extends Seeder
                 'files_destroy',
                 'files_index',
             ]);
-        
+
         $role = Role::create(['name' => 'Aprendiz'])->givePermissionTo([
+            'view_dashboard',
+
             'file-types_show',
             'file-types_index',
-            
+
             'files_show',
             'files_edit',
             'files_create',

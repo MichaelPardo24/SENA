@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Inicio') }}
         </h2>
     </x-slot>
 
@@ -20,7 +20,7 @@
 
                 {{-- Si es instructor --}}
                 @if (auth()->user()->hasRole('Instructor Tecnico'))
-                    <div class="p-4">
+                    <div class="p-4 my-3">
                         <h2 class="text-xl text-orange-600 font-semibold">Fichas asociadas</h2>
                         <p class="text-md">Estas son las fichas a las cuales ha sido asignado:</p>
                         <div class="mt-2 flex items-center">
@@ -28,6 +28,41 @@
                             <span class="text-xs select-none text-gray-500">Ficha archivada</span>
                         </div>
                         @livewire('ins-tecnico.fichas')
+                    </div>
+                @endif
+
+                {{-- Si es instructor de seguimiento --}}
+                @if (auth()->user()->hasRole('Instructor Seguimiento'))
+                    <div class="p-4 my-3">
+                        <h2 class="text-xl text-orange-600 font-semibold">Aprendices asociados</h2>
+                        <p class="text-md">Para ver los aprendices a los que debe realizar seguimiento de clic en el siguiente botón:</p>
+                        <a
+                            class="inline-flex items-center px-4 py-2 bg-orange-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:border-orange-600 focus:ring focus:ring-orange-300 disabled:opacity-25 transition mt-2"
+                            href="{{ route('follow-ups.index') }}">
+                            Ver Aprendices
+                        </a>
+                        
+                        {{-- Listado de fichas --}}
+                        @livewire('follow-ups.index')
+                    </div>
+                @endif
+                
+                {{-- Si es un coordinador --}}
+                @if (auth()->user()->hasRole('Coordinador'))
+                    <div class="p-4 my-3 overflow-hidden">
+                        <div>
+                            <h2 class="text-xl text-orange-600 font-semibold">APRENDICES EN PROCESO DE CERTIFICACIÓN</h2>
+                            <p class="text-md">Listado de aprendices con estado "Finalizado" a espera para certificar su etapa productiva</p>
+                            {{-- Listado de aprendices con el estado Finalizado --}}
+                            @livewire('coordinador.certificate')
+                        </div>
+
+                        <div class="mt-16">
+                            <h2 class="text-xl text-orange-600 font-semibold">APRENDICES EN PROCESO DE ACEPTACIÓN</h2>
+                            <p class="text-md">Listado de aprendices con estado "Preparado" a espera para aceptar e iniciar su etapa productiva</p>
+                            {{-- Listado de aprendices con el estado preparado --}}
+                            @livewire('coordinador.accepted')
+                        </div>
                     </div>
                 @endif
             </div>

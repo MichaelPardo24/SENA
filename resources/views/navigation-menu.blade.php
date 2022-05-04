@@ -1,6 +1,12 @@
 @php
     $navLinks = [
         [
+            'name' => 'Inico',
+            'active' => request()->routeIs('dashboard'),
+            'route' => route('dashboard'),
+            'rol' => 'view_dashboard',
+        ],
+        [
             'name' => 'Usuarios',
             'active' => request()->routeIs('user.index', 'user.edit', 'user.create'),
             'route' => route('user.index'),

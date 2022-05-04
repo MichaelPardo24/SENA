@@ -21,8 +21,9 @@ class ChangeUserStatus extends Component
         $this->status = [
             'Certificado',
             'Finalizado',
+            'Aceptado',
+            'Preparado',
             'Pendiente',
-            'Preparado'
         ];
 
         $this->fichaId = $ficha ?? Route::current()->parameter('ficha')->id;

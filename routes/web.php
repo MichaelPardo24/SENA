@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Mail\test;
-use App\Models\Ficha;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\FollowUps\ApprenticesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +16,15 @@ use Illuminate\Support\Facades\Mail;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+        if (Auth()->user()){
+                if (auth()->user->hasrole('Manager')) {
+                        return redirect('/users');
+                } else {
+                        return redirect('/dashboard');
+                }
+        } else{
+                return redirect('/login');
+        }
 })->name('welcome');
 
 //programas
@@ -70,6 +76,20 @@ Route::get('instructor-tecnico/fichas/{ficha:code}/apprentices', [\App\Http\Cont
         ->name('ins-tecnico.fichas.apprentices');
 // -------- Fin  rutas de instructor tecnico 
 
+// Rutas de follow ups
+Route::group(['middleware' => ['role:Instructor Seguimiento']], function () {
+        Route::get('follow-ups/apprentices', [\ApprenticesController::class, 'index'])
+        ->name('follow-ups.index');  // <-- aún no implementada. Se supone que muestra los 
+                                     // alumnos que no fueron asignados a seguimiento mediante ficha.
+
+        Route::get('follow-ups/fichas/{ficha:code}/apprentices', [ApprenticesController::class, 'showApprenticesByFicha'])
+                ->name('follow-ups.ficha.apprentices')
+                ->withTrashed();
+
+        Route::get('follow-ups/fichas/{ficha:code}/apprentices/{user:document}', [ApprenticesController::class, 'showFollowByFicha'])
+                ->name('follow-ups.ficha.apprentices.show');
+        });
+// -------- Fin  rutas de follow ups 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
