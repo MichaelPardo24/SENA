@@ -39,10 +39,10 @@
                     </div>
                     <div class="flex flex-row p-2 mt-4 justify-around">
                         <x-jet-button class="">
-                            Crear FileType
+                            Crear
                         </x-jet-button>
 
-                        <a href="{{route('file-types.index')}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Index</a>
+                        <a href="{{route('file-types.index')}}" class="font-semibold uppercase tracking-widest rounded bg-slate-700 text-xs text-slate-200 px-4 py-2 transition-all duration-300 hover:bg-slate-900">Regresar</a>
                     </div>
                 </form>
             </div>

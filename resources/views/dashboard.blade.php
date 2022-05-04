@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Inicio') }}
         </h2>
     </x-slot>
 
@@ -47,6 +47,24 @@
                     </div>
                 @endif
                 
+                {{-- Si es un coordinador --}}
+                @if (auth()->user()->hasRole('Coordinador'))
+                    <div class="p-4 my-3 overflow-hidden">
+                        <div>
+                            <h2 class="text-xl text-orange-600 font-semibold">APRENDICES EN PROCESO DE CERTIFICACIÓN</h2>
+                            <p class="text-md">Listado de aprendices con estado "Finalizado" a espera para certificar su etapa productiva</p>
+                            {{-- Listado de aprendices con el estado Finalizado --}}
+                            @livewire('coordinador.certificate')
+                        </div>
+
+                        <div class="mt-16">
+                            <h2 class="text-xl text-orange-600 font-semibold">APRENDICES EN PROCESO DE ACEPTACIÓN</h2>
+                            <p class="text-md">Listado de aprendices con estado "Preparado" a espera para aceptar e iniciar su etapa productiva</p>
+                            {{-- Listado de aprendices con el estado preparado --}}
+                            @livewire('coordinador.accepted')
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

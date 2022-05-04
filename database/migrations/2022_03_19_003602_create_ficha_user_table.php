@@ -20,8 +20,9 @@ class CreateFichaUserTable extends Migration
             $table->enum('status', [
                 'Certificado',
                 'Finalizado',
-                'Pendiente',
+                'Aceptado',
                 'Preparado',
+                'Pendiente',
             ]);
 
         });
