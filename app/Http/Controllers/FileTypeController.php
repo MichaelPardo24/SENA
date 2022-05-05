@@ -56,8 +56,12 @@ class FileTypeController extends Controller
 
         $url = Storage::putFile('docs', $request->file('file'));
 
+        //obtenemos la extension del archivo
+        $ext = $request->file('file')->getClientOriginalExtension();
+
         FileType::create([
-            'name' => $request->name,
+            //nombramos la columna name con el nombre, mas la extensión
+            'name' => $request->name . "." . $ext,
             'url'  => $url
         ]);
 
@@ -72,7 +76,7 @@ class FileTypeController extends Controller
      */
     public function show(FileType $fileType)
     {
-        return Storage::download($fileType->url, Str::slug($fileType->name));
+        return Storage::download($fileType->url, $fileType->name);
 
     }
 

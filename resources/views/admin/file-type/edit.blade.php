@@ -26,7 +26,13 @@
                     <form action="{{ route('file-types.update', $fileType) }}" method="post">
                         @method('PUT')
                         @csrf
-                      
+                        <div class="p-3">
+                            <span class="text-sm text-center">
+                                <i>
+                                    Por favor no modifique la extension (caracteres que inician desde el punto en adelante). De hacerlo dañara el archivo.
+                                </i>
+                            </span>
+                        </div>
                         <div>
                             <x-jet-label value="Nombre:" />
                             <x-jet-input 
