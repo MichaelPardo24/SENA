@@ -8,7 +8,7 @@
             <div x-data="{ showDetails: false}" class="p-3 bg-white text-gray-700 rounded shadow-md">
                 <button type="button" class="p-2 underline text-sm font-semibold" @click="showDetails = !showDetails"> Ocultar/mostrar </button>
                 <p class="text-gray-500 italic text-sm mb-4">Este seguimiento de empezo el: 
-                    {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $state['start_date'])->format('d-F-Y')}}
+                    {{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.uP', $state['start_date'])->format('d-F-Y')}}
                 </p>
                 <div 
                     x-show="showDetails"
