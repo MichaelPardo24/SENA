@@ -20,7 +20,7 @@
         ],
         [
             'name' => 'Fichas',
-            'active' => request()->routeIs('fichas.index', 'fichas.edit', 'fichas.create'),
+            'active' => request()->routeIs('fichas.index', 'fichas.edit', 'fichas.create', 'fichas.users.index', 'fichas.users.show'),
             'route' => route('fichas.index'),
             'rol' => 'fichas_index',
         ],

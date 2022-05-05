@@ -18,13 +18,13 @@ class CreateFichaUserTable extends Migration
             $table->foreignId('ficha_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('status', [
-                'Certificado',
-                'Finalizado',
-                'Aceptado',
-                'Preparado',
-                'Pendiente',
-            ]);
-
+                    'Certificado',
+                    'Finalizado',
+                    'Aceptado',
+                    'Preparado',
+                    'Pendiente',
+                ])
+                ->default('Pendiente');
         });
     }
 

@@ -25,13 +25,15 @@
                 <div x-show="open" @click.away="open = false" x-cloak style=" display: none !important" class="absolute shadow-md bg-gray-100 w-min border border-gray-400 mt-0.5 rounded-sm">
                     <ul class="cursor-pointer">
                         @foreach ($fichas as $ficha)
-                            <li class="whitespace-nowrap @if ($ficha->trashed()) bg-red-200/60 @endif hover:bg-gray-200">
-                                <a 
-                                    href="{{ route('fichas.apprentices-files.index', $ficha->code ) }}" 
-                                    class="block p-2"
-                                >{{ $ficha->program->name . ' | ' . $ficha->code}} </a>
-                            </li>
-                        @endforeach
+                            @if ($ficha->pivot->status == "Aceptado")
+                                <li class="whitespace-nowrap hover:bg-gray-200">
+                                    <a 
+                                        href="{{ route('fichas.apprentices-files.index', $ficha->code ) }}" 
+                                        class="block p-2"
+                                    >{{ $ficha->program->name . ' | ' . $ficha->code}} </a>
+                                </li>
+                            @endif
+                        @endforeach 
                     </ul>
                 </div>
 

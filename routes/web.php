@@ -17,10 +17,10 @@ use App\Http\Controllers\FollowUps\ApprenticesController;
 
 Route::get('/', function () {
         if (Auth()->user()){
-                if (auth()->user->hasrole('Manager')) {
-                        return redirect('/users');
+                if (auth()->user()->hasrole('Manager')) {
+                        return redirect('/user');
                 } else {
-                        return redirect('/dashboard');
+                        return redirect('/inicio');
                 }
         } else{
                 return redirect('/login');
@@ -91,6 +91,10 @@ Route::group(['middleware' => ['role:Instructor Seguimiento']], function () {
         });
 // -------- Fin  rutas de follow ups 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/inicio', function () {
+    if (auth()->user()->hasrole('Manager')){
+        return redirect('/');
+    } else{
+        return view('dashboard');
+    }
 })->name('dashboard');

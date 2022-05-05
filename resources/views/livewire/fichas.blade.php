@@ -15,17 +15,19 @@
         </div>
     @endif
     <header class="flex justify-between px-6 py-4 border-b border-gray-100">
-        <a class="bg-orange-500 font-bold py-2 px-4 mr-1 border rounded hover:bg-orange-400 text-white" href="{{ route('fichas.create') }}">Crear</a>
+        <div class="my-auto">
+            <a class="bg-orange-500 font-bold py-2 px-4 mr-1 border rounded hover:bg-orange-400 text-white" href="{{ route('fichas.create') }}">Crear</a>
+        </div>
         @if ($showSoftDeletes == true)
             <button wire:click="$set('showSoftDeletes', false)" class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white">
                 Regresar
             </button>
         @else
             <button wire:click="$set('showSoftDeletes', true)" class="bg-orange-500 font-bold py-2 px-4 border rounded hover:bg-orange-400 text-white">
-                Ver Archivados
+                Archivados
             </button>
         @endif
-        <x-jet-input type="text" wire:model.debounce.500ms="search" class="block w-9/12 mx-auto shadow-md" placeholder="Busca aquí"/>
+        <x-jet-input type="text" wire:model.debounce.500ms="search" class="block w-full mx-2 shadow-md" placeholder="Busca aquí"/>
     </header>
     <div class="p-3 overflow-x-auto">
         @if (count($fichas))

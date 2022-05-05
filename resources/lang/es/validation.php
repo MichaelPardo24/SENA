@@ -159,7 +159,7 @@ return [
         'current_password' => 'contraseña actual',
         'code' => 'codigo de la ficha',
         'start_school_stage' => 'inicio etapa lectiva',
-        'start_school_stage' => 'fin etapa lectiva',
+        'end_school_stage' => 'fin etapa lectiva',
         'start_production_stage' => 'inicio etapa productiva',
         'end_production_stage' => 'fin etapa productiva',
         'town' => 'municipio',
