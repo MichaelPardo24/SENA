@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="mt-4">
-                            <x-jet-label value="{{ __('Fecha de cumpleaños') }}" />
+                            <x-jet-label value="{{ __('Fecha De Nacimiento') }}" />
                             <x-jet-input class="block mt-1 w-full" type="date" name="birth_at" value="{{old('birth_at', $user->profile->birth_at)}}" />
                         </div>
 
@@ -216,7 +216,7 @@
                     </div>
 
                     <div class="mt-4">
-                        <x-jet-label value="{{ __('Fecha de cumpleaños') }}" />
+                        <x-jet-label value="{{ __('Fecha De Nacimiento') }}" />
                         <x-jet-input class="block mt-1 w-full" type="date" name="birth_at" value="{{old('birth_at', $user->profile->birth_at)}}" />
                     </div>
 

@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Fichas') }}
+            {{ __('Mis Archivos') }}
         </h2>
     </x-slot>
 
@@ -16,8 +16,6 @@
                     </div>
                 @endif
                 
-                <h3 class="block p-4 text-slate-800">Mis Archivos:</h3>
-
                 {{-- Livewire --}}
                 {{ $slot }}
             </div>

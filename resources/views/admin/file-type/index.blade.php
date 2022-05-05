@@ -46,7 +46,7 @@
                                         @else
                                             <td class="whitespace-nowrap p-2 text-left font-semibold text-gray-800">{{ $fileType->name}}</td>
                                         @endcan
-                                        <td class="whitespace-nowrap text-left font-bold text-gray-800"><a href="{{ route('file-types.show', $fileType) }}" class="block p-2">Descargar</a></td>
+                                        <td class="whitespace-nowrap text-right md:pr-5 font-bold text-gray-800"><a href="{{ route('file-types.show', $fileType) }}" class="block p-2">Descargar</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
