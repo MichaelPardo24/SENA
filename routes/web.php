@@ -20,7 +20,7 @@ Route::get('/', function () {
                 if (auth()->user()->hasrole('Manager')) {
                         return redirect('/user');
                 } else {
-                        return redirect('/inicio');
+                        return redirect('/dashboard');
                 }
         } else{
                 return redirect('/login');
@@ -91,7 +91,7 @@ Route::group(['middleware' => ['role:Instructor Seguimiento']], function () {
         });
 // -------- Fin  rutas de follow ups 
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/inicio', function () {
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     if (auth()->user()->hasrole('Manager')){
         return redirect('/');
     } else{
