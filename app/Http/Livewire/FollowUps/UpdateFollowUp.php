@@ -77,14 +77,17 @@ class UpdateFollowUp extends Component
         try {
             $updateFollow = FollowUp::find($this->state['id']);
 
-            $this->state['firstVisit'] = $this->firstVisit;
-            $this->state['secondVisit'] = $this->secondVisit;
+            $this->state['first_visit_date'] = $this->firstVisit;
+            
+            if ($this->secondVisit) {
+                $this->state['second_visit_date'] = $this->secondVisit;                
+            }
 
             $updateFollow->update($this->state);
             $this->emit('nice', 'Información actualizada correctamente');
 
         } catch (\Exception $e) {
-            $this->emit('error', 'No se ha podido actualizar la información del seguimiento :[');
+            $this->emit('error', 'No se ha podido actualizar la información del seguimiento :[' . $e);
         }
     }
   
