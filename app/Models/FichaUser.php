@@ -9,7 +9,7 @@ class FichaUser extends Pivot
 {
     use HasFactory;
 
-    const STATUS = ['Certificado','Finalizado','Pendiente','Preparado'];
+    const STATUS = ['Certificado','Finalizado','Aceptado','Preparado','Pendiente'];
 
     protected $table = "ficha_user";
     public $incrementing = true;

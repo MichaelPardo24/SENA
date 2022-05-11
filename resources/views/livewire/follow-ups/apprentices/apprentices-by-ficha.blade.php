@@ -19,13 +19,28 @@
                         <th class="p-3 whitespace-nowrap font-semibold">Documento</th>
                         <th class="p-3 whitespace-nowrap font-semibold">Nombre Completo</th>
                         <th class="p-3 whitespace-nowrap font-semibold">Correo</th>
-                        <th class="p-3 whitespace-nowrap font-semibold">Estado</th>
-                        <th class="p-3 whitespace-nowrap font-semibold"></th>
+                       
+                        @if (! $filters['onlyFollow'])
+                            <th class="p-3 whitespace-nowrap font-semibold">Estado</th>
+                        @else
+                            <th class="p-3 font-semibold">Estado Seguimiento</th>
+                            <th class="p-3 font-semibold">Inicio Seguimiento</th>
+                        @endif
+                        
+                        <th class="p-3 whitespace-nowrap font-semibold">Seguimiento</th>
                     </tr>
                 </thead>
-                <tbody class="text-sm divide-y divide-gray-100">
+                <tbody class="text-xs divide-y divide-gray-100">
                     @foreach ($apprentices as $key => $apprentice)
-                        <tr class="hover:bg-orange-50 cursor-default">
+                        <tr 
+                            class="hover:bg-orange-50 cursor-default 
+                                @if (isset($apprentice->apFollowUps[0]))
+                                    @if ($apprentice->apFollowUps[0]->status == 'Completo')
+                                        bg-red-100
+                                        hover:bg-red-200 
+                                    @endif
+                                @endif">
+
                             <td class="text-left p-2 font-bold text-gray-800">
                                 {{ $apprentice->document }}
                             </td>
@@ -44,21 +59,32 @@
                             <td class="text-left p-2 font-bold text-gray-800">
                                 {{ $apprentice->email }}
                             </td>
-                            <td class="text-left p-2 font-bold text-gray-800">
-                                {{ $apprentice->getOriginal('pivot_status') }}
-                            </td>
+
+                            @if (! $filters['onlyFollow'])
+                                <td class="text-left p-2 font-bold text-gray-800">
+                                    {{ $apprentice->getOriginal('pivot_status') }}
+                                </td>
+                            @else
+                                <td class="text-center p-2 font-bold text-gray-800">
+                                    {{ $apprentice->apFollowUps[0]->status }}
+                                </td>
+                                <td class="text-center p-2 font-bold text-gray-800">
+                                    {{ $apprentice->apFollowUps[0]->start_date->format('d-F-Y') }}
+                                </td>
+                            @endif
+                          
                             <td class="text-left p-2 font-bold text-gray-800">
                                 @if ($this->filters['onlyFollow'])
                                     <a 
                                         href="{{ route('follow-ups.ficha.apprentices.show', ['ficha' => $this->ficha, 'user' => $apprentice])}}"
                                         class="block text-center py-1 px-2 bg-orange-400 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:border-orange-600 focus:ring focus:ring-orange-300 disabled:opacity-25 transition">
-                                        Ver Seguimiento
+                                        Ver
                                     </a>
                                 @else
                                     <button 
                                         wire:click="setModal({{$key}}, {{$apprentice->id}})"
                                         class="block text-center py-1 px-2 bg-orange-400 border border-transparent rounded-md font-semibold text-xs text-white hover:bg-orange-500 active:bg-orange-600 focus:outline-none focus:border-orange-600 focus:ring focus:ring-orange-300 disabled:opacity-25 transition">
-                                        Nuevo Seguimiento
+                                        Nuevo
                                     </button>
                                 @endif
                             </td>
@@ -66,6 +92,9 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+        <div>
+            {{$apprentices->links()}}
         </div>
 
     @else

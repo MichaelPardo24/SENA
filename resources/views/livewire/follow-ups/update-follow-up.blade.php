@@ -8,7 +8,7 @@
             <div x-data="{ showDetails: false}" class="p-3 bg-white text-gray-700 rounded shadow-md">
                 <button type="button" class="p-2 underline text-sm font-semibold" @click="showDetails = !showDetails"> Ocultar/mostrar </button>
                 <p class="text-gray-500 italic text-sm mb-4">Este seguimiento de empezo el: 
-                    {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $state['start_date'])->format('d-F-Y')}}
+                    {{ \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s.uP', $state['start_date'])->format('d-F-Y')}}
                 </p>
                 <div 
                     x-show="showDetails"
@@ -82,7 +82,7 @@
                         
                         <div class="mt-3 sm:mt-0">
                             <x-jet-label for="town" value="Ciudad" />
-                            <x-jet-input id="town" type="email" placeholder="ej. Ibague" class="mt-1 block w-full" wire:model.defer="state.town" />
+                            <x-jet-input id="town" type="text" placeholder="ej. Ibague" class="mt-1 block w-full" wire:model.defer="state.town" />
                             <x-jet-input-error for="followUp.town" class="mt-2" />
                         </div>
                     </div>

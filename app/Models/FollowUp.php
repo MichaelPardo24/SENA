@@ -11,6 +11,10 @@ class FollowUp extends Model
 
     public $timestamps = false;
 
+    protected $casts = [
+        'start_date' => 'datetime',
+    ];
+
     protected $fillable = [
         'start_date',
         'company_cod',

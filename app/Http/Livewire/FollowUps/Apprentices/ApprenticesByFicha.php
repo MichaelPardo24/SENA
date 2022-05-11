@@ -4,10 +4,15 @@ namespace App\Http\Livewire\FollowUps\Apprentices;
 
 use App\Models\Ficha;
 use App\Models\FollowUp;
+use App\Models\Profile;
+use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ApprenticesByFicha extends Component
 {
+    use WithPagination;
+
     /**
      * Ficha xd
      * 
@@ -41,7 +46,15 @@ class ApprenticesByFicha extends Component
     /**
      * El estado del componente
      */
-    public $state = [];
+    public $state = [
+        'apprentice_id'   => '',
+        'company_cod'     => '',
+        'company_name'    => '',
+        'company_address' => '',
+        'boss_name'       => '',
+        'boss_phone'      => '',
+        'boss_email'      => '',
+    ];
 
     /**
      * Index usado para obtener un aprendiz de la 
@@ -82,17 +95,6 @@ class ApprenticesByFicha extends Component
     public function mount(Ficha $ficha)
     {
         $this->ficha = $ficha;
-
-        $this->state = [
-            'apprentice_id'   => '',
-            'company_cod'     => '',
-            'company_name'    => '',
-            'company_address' => '',
-            'boss_name'       => '',
-            'boss_phone'      => '',
-            'boss_email'      => '',
-        ];
-
         $this->types = \App\Models\ProductionStageType::all();
     }
 
@@ -137,7 +139,7 @@ class ApprenticesByFicha extends Component
                     'instructor_id' => auth()->id(),
                 ])
             );
-            $this->openModal = false;
+            $this->reset(['n', 'state', 'openModal']);
             $this->emit('nice', 'Se ha generado el seguimiento correctamente!');
 
         } catch (\Exception $e) {
@@ -150,10 +152,12 @@ class ApprenticesByFicha extends Component
         $method = $this->filters['onlyFollow'] ? 'whereHas' : 'whereDoesntHave';
 
         $apprentices = $this->ficha->users()->role('Aprendiz')
-            ->with('profile')
+            ->with(['profile', 'apFollowUps'])
             ->$method('apFollowUps', function ($q){ 
                 $q->where('ficha_id', $this->ficha->id);
             })
+
+            // Filtros
             ->where(function ($q) {
                 $q->where('document', 'LIKE', '%'. $this->filters['search'] .'%')
                 ->orWhere('email', 'LIKE', '%'. $this->filters['search'] .'%')
@@ -161,11 +165,33 @@ class ApprenticesByFicha extends Component
                 ->orWhereRelation('profile', 'surnames', 'LIKE', '%'. $this->filters['search'] .'%');
             })
             ->wherePivot('status', 'Preparado')
-            ->get();
+
+            // Cuando No se estan viendo los seguimientos quero que los organice 
+            // con base a los nombres.
+            ->when(! $this->filters['onlyFollow'], function ($q) {
+                $q->orderBy(
+                    Profile::select('names')
+                        ->whereColumn('profiles.id', 'users.id'));
+            })
+
+            // Si se muestran los alumnos que TIENEN seguimiento quiero que los 
+            // ordene en base al estado (algo asi como un groupBy jeje) y por
+            // fecha de creacion de seguimiento.
+            ->when($this->filters['onlyFollow'], function ($q) {
+                $q->orderByDesc(
+                    FollowUp::select('status')
+                        ->whereColumn('follow_ups.apprentice_id', 'users.id')
+                        ->where('follow_ups.ficha_id', $this->ficha->id))
+                ->orderBy(
+                    FollowUp::select('start_date')
+                        ->whereColumn('follow_ups.apprentice_id', 'users.id')
+                        ->where('follow_ups.ficha_id', $this->ficha->id));
+            })
+            ->paginate(10);
 
         return view('livewire.follow-ups.apprentices.apprentices-by-ficha', 
                 [
-                    'apprentices' => $apprentices->sortBy('profile.names')
+                    'apprentices' => $apprentices
                 ]);
     }
 }
